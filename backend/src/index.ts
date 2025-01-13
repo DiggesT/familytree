@@ -1,18 +1,19 @@
 import express from 'express'
-
-const members = [
-  { id: '1', name: 'Selezneva Elena', description: 'Mother' },
-  { id: '2', name: 'Parkhomenko Borris', description: 'Father' },
-]
+import * as trpcExpress from '@trpc/server/adapters/express'
+import { trpcRouter } from './trpc'
 
 const expressApp = express()
+
 expressApp.get('/ping', (req, res) => {
   res.send('pong')
 })
 
-expressApp.get('/list', (req, res) => {
-  res.send(members)
-})
+expressApp.use(
+  '/trpc',
+  trpcExpress.createExpressMiddleware({
+    router: trpcRouter,
+  })
+)
 
 expressApp.listen(3000, () => {
   console.info('Listening at http://localhost:3000')
