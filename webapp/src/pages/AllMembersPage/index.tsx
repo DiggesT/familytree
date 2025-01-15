@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom'
+import { getViewMemberRoute } from '../../lib/routes'
 import { trpc } from '../../lib/trpc'
 
 export const AllMembersPage = () => {
@@ -17,7 +19,9 @@ export const AllMembersPage = () => {
       {data?.members.map((member) => {
         return (
           <div key={member.id}>
-            <h2>{member.name}</h2>
+            <h2>
+              <Link to={getViewMemberRoute({ memberId: member.id })}>{member.name}</Link>
+            </h2>
             <p>{member.description}</p>
           </div>
         )
