@@ -4,6 +4,6 @@ const getRouteParams = <T extends Record<string, boolean>>(object: T) => {
 
 export const getAllMembersRoute = () => '/'
 
-export const viewMemberRouteParams = getRouteParams({ memberId: true })
+export const viewMemberRouteParams = getRouteParams({ id: true })
 export type ViewMemberRouteParams = typeof viewMemberRouteParams
-export const getViewMemberRoute = ({ memberId }: ViewMemberRouteParams) => `/members/${memberId}`
+export const getViewMemberRoute = ({ id }: ViewMemberRouteParams) => `/members/${id}`

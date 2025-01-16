@@ -16,11 +16,11 @@ export const AllMembersPage = () => {
   return (
     <div>
       <h1>All Members</h1>
-      {data?.members.map((member) => {
+      {data.members.map((member) => {
         return (
           <div key={member.id}>
             <h2>
-              <Link to={getViewMemberRoute({ memberId: member.id })}>{member.name}</Link>
+              <Link to={getViewMemberRoute({ id: member.id })}>{member.name}</Link>
             </h2>
             <p>{member.description}</p>
           </div>
