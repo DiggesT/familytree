@@ -1,7 +1,8 @@
 import { useParams } from 'react-router-dom'
+import { type ViewMemberRouteParams } from '../../lib/routes'
 
 export const ViewMemberPage = () => {
-  const { memberId } = useParams() as { memberId: string }
+  const { memberId } = useParams() as ViewMemberRouteParams
   return (
     <div>
       <h1>{memberId}</h1>
