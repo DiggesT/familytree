@@ -1,6 +1,7 @@
 import { useParams } from 'react-router-dom'
 import { type ViewMemberRouteParams } from '../../lib/routes'
 import { trpc } from '../../lib/trpc'
+import css from './index.module.scss'
 
 export const ViewMemberPage = () => {
   const { id } = useParams() as ViewMemberRouteParams
@@ -21,9 +22,9 @@ export const ViewMemberPage = () => {
 
   return (
     <div>
-      <h1>{data.member.id}</h1>
-      <p>{data.member.description}</p>
-      <div dangerouslySetInnerHTML={{ __html: data.member.text }} />
+      <h1 className={css.title}>{data.member.name}</h1>
+      <p className={css.role}>{data.member.role}</p>
+      <div className={css.text} dangerouslySetInnerHTML={{ __html: data.member.text }} />{' '}
     </div>
   )
 }
