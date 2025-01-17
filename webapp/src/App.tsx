@@ -1,8 +1,9 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { Layout } from './components/Layout'
-import { getAllMembersRoute, getViewMemberRoute, viewMemberRouteParams } from './lib/routes'
+import * as routes from './lib/routes'
 import { TrpcProvider } from './lib/trpc'
 import { AllMembersPage } from './pages/AllMembersPage'
+import { NewMemberPage } from './pages/NewMemberPage/'
 import { ViewMemberPage } from './pages/ViewMemberPage'
 import './styles/global.scss'
 
@@ -12,8 +13,9 @@ export const App = () => {
       <BrowserRouter>
         <Routes>
           <Route element={<Layout />}>
-            <Route path={getAllMembersRoute()} element={<AllMembersPage />} />
-            <Route path={getViewMemberRoute(viewMemberRouteParams)} element={<ViewMemberPage />} />
+            <Route path={routes.getAllMembersRoute()} element={<AllMembersPage />} />
+            <Route path={routes.getNewMemberRoute()} element={<NewMemberPage />} />
+            <Route path={routes.getViewMemberRoute(routes.viewMemberRouteParams)} element={<ViewMemberPage />} />
           </Route>
         </Routes>
       </BrowserRouter>
