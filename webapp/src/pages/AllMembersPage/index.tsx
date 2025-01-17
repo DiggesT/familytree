@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import { Segment } from '../../components/Segment'
 import { getViewMemberRoute } from '../../lib/routes'
 import { trpc } from '../../lib/trpc'
 import css from './index.module.scss'
@@ -15,20 +16,22 @@ export const AllMembersPage = () => {
   }
 
   return (
-    <div>
-      <h1 className={css.title}>All Members</h1>
+    <Segment title="All Members">
       <div className={css.members}>
         {data.members.map((member) => (
           <div className={css.member} key={member.id}>
-            <h2 className={css.memberName}>
-              <Link className={css.memberLink} to={getViewMemberRoute({ id: member.id })}>
-                {member.name}
-              </Link>
-            </h2>
-            <p className={css.memberRole}>{member.role}</p>
+            <Segment
+              size={2}
+              title={
+                <Link className={css.memberLink} to={getViewMemberRoute({ id: member.id })}>
+                  {member.name}
+                </Link>
+              }
+              description={member.role}
+            />
           </div>
         ))}
       </div>
-    </div>
+    </Segment>
   )
 }

@@ -1,10 +1,6 @@
 @import '../../styles/_vars.scss';
 @import '../../styles/_mixins.scss';
 
-.title {
-  @include h1;
-}
-
 .members {
   .member {
     padding: 20px;
@@ -14,16 +10,8 @@
       margin-top: 20px;
     }
 
-    .memberName {
-      @include h2;
-
-      .memberLink {
-        @include link;
-      }
-    }
-
-    .memberRole {
-      font-size: 18px;
+    .memberLink {
+      @include link;
     }
   }
 }

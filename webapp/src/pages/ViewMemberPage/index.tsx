@@ -1,4 +1,5 @@
 import { useParams } from 'react-router-dom'
+import { Segment } from '../../components/Segment'
 import { type ViewMemberRouteParams } from '../../lib/routes'
 import { trpc } from '../../lib/trpc'
 import css from './index.module.scss'
@@ -21,10 +22,8 @@ export const ViewMemberPage = () => {
   }
 
   return (
-    <div>
-      <h1 className={css.title}>{data.member.name}</h1>
-      <p className={css.role}>{data.member.role}</p>
+    <Segment title={data.member.name} description={data.member.role}>
       <div className={css.text} dangerouslySetInnerHTML={{ __html: data.member.text }} />{' '}
-    </div>
+    </Segment>
   )
 }
