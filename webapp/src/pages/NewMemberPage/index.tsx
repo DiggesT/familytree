@@ -1,27 +1,33 @@
-import { useState } from 'react'
+import { useFormik } from 'formik'
 import { Input } from '../../components/Input'
 import { Segment } from '../../components/Segment'
 import { Textarea } from '../../components/Textarea'
 
 export const NewMemberPage = () => {
-  const [state, setState] = useState({
-    firstName: '',
-    lastName: '',
-    role: '',
-    text: '',
+  const formik = useFormik({
+    initialValues: {
+      firstName: '',
+      lastName: '',
+      role: '',
+      text: '',
+    },
+    onSubmit: (values) => {
+      console.info('Submitted', values)
+    },
   })
+
   return (
     <Segment title="New Member">
       <form
         onSubmit={(e) => {
           e.preventDefault()
-          console.info('Submitted', state)
+          formik.handleSubmit()
         }}
       >
-        <Input name="firstName" label="First Name" state={state} setState={setState} />
-        <Input name="lastName" label="Last Name" state={state} setState={setState} />
-        <Input name="role" label="Role" state={state} setState={setState} />
-        <Textarea name="text" label="Text" state={state} setState={setState} />
+        <Input name="firstName" label="First Name" formik={formik} />
+        <Input name="lastName" label="Last Name" formik={formik} />
+        <Input name="role" label="Role" formik={formik} />
+        <Textarea name="text" label="Text" formik={formik} />
 
         <button type="submit">Create Member</button>
       </form>
