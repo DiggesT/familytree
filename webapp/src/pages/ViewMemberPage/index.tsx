@@ -22,7 +22,7 @@ export const ViewMemberPage = () => {
   }
 
   return (
-    <Segment title={data.member.name} description={data.member.role}>
+    <Segment title={`${data.member.firstName} ${data.member.lastName}`} description={data.member.role}>
       <div className={css.text} dangerouslySetInnerHTML={{ __html: data.member.text }} />{' '}
     </Segment>
   )

@@ -24,7 +24,7 @@ export const AllMembersPage = () => {
               size={2}
               title={
                 <Link className={css.memberLink} to={getViewMemberRoute({ id: member.id })}>
-                  {member.name}
+                  {`${member.firstName} ${member.lastName}`}
                 </Link>
               }
               description={member.role}
