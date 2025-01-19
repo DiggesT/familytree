@@ -1,4 +1,6 @@
 import { useFormik } from 'formik'
+import { withZodSchema } from 'formik-validator-zod'
+import { z } from 'zod'
 import { Input } from '../../components/Input'
 import { Segment } from '../../components/Segment'
 import { Textarea } from '../../components/Textarea'
@@ -11,19 +13,13 @@ export const NewMemberPage = () => {
       role: '',
       text: '',
     },
-    validate: (values) => {
-      const errors: Partial<typeof values> = {}
-      if (!values.firstName) {
-        errors.firstName = 'First Name is required'
-      }
-      if (!values.lastName) {
-        errors.lastName = 'Last Name is required'
-      }
-      if (!values.role) {
-        errors.role = 'Role is required'
-      }
-      return errors
-    },
+    validate: withZodSchema(
+      z.object({
+        firstName: z.string().min(1, 'First Name is required'),
+        lastName: z.string().min(1, 'Last Name is required'),
+        role: z.string().min(1, 'Role is required'),
+      })
+    ),
     onSubmit: (values) => {
       console.info('Submitted', values)
     },
