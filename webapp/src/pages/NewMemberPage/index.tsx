@@ -11,6 +11,19 @@ export const NewMemberPage = () => {
       role: '',
       text: '',
     },
+    validate: (values) => {
+      const errors: Partial<typeof values> = {}
+      if (!values.firstName) {
+        errors.firstName = 'First Name is required'
+      }
+      if (!values.lastName) {
+        errors.lastName = 'Last Name is required'
+      }
+      if (!values.role) {
+        errors.role = 'Role is required'
+      }
+      return errors
+    },
     onSubmit: (values) => {
       console.info('Submitted', values)
     },
@@ -28,7 +41,7 @@ export const NewMemberPage = () => {
         <Input name="lastName" label="Last Name" formik={formik} />
         <Input name="role" label="Role" formik={formik} />
         <Textarea name="text" label="Text" formik={formik} />
-
+        {!formik.isValid && <div style={{ color: 'red' }}>Some fields are invalid</div>}
         <button type="submit">Create Member</button>
       </form>
     </Segment>
