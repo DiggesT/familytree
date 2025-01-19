@@ -4,8 +4,11 @@ import { z } from 'zod'
 import { Input } from '../../components/Input'
 import { Segment } from '../../components/Segment'
 import { Textarea } from '../../components/Textarea'
+import { trpc } from '../../lib/trpc'
 
 export const NewMemberPage = () => {
+  const createMember = trpc.createMember.useMutation()
+
   const formik = useFormik({
     initialValues: {
       firstName: '',
@@ -20,8 +23,8 @@ export const NewMemberPage = () => {
         role: z.string().min(1, 'Role is required'),
       })
     ),
-    onSubmit: (values) => {
-      console.info('Submitted', values)
+    onSubmit: async (values) => {
+      await createMember.mutateAsync(values)
     },
   })
 
