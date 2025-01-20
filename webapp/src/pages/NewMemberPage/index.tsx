@@ -1,12 +1,14 @@
 import { zCreateMemberTrpcInput } from '@familytree/backend/src/router/createMember/input'
 import { useFormik } from 'formik'
 import { withZodSchema } from 'formik-validator-zod'
+import { useState } from 'react'
 import { Input } from '../../components/Input'
 import { Segment } from '../../components/Segment'
 import { Textarea } from '../../components/Textarea'
 import { trpc } from '../../lib/trpc'
 
 export const NewMemberPage = () => {
+  const [successMessageVisible, setSuccessMessageVisible] = useState(false)
   const createMember = trpc.createMember.useMutation()
 
   const formik = useFormik({
@@ -19,6 +21,11 @@ export const NewMemberPage = () => {
     validate: withZodSchema(zCreateMemberTrpcInput),
     onSubmit: async (values) => {
       await createMember.mutateAsync(values)
+      formik.resetForm()
+      setSuccessMessageVisible(true)
+      setTimeout(() => {
+        setSuccessMessageVisible(false)
+      }, 3000)
     },
   })
 
@@ -35,6 +42,7 @@ export const NewMemberPage = () => {
         <Input name="role" label="Role" formik={formik} />
         <Textarea name="text" label="Text" formik={formik} />
         {!formik.isValid && !!formik.submitCount && <div style={{ color: 'red' }}>Some fields are invalid</div>}
+        {successMessageVisible && <div style={{ color: 'green' }}>Member created!</div>}
         <button type="submit" disabled={formik.isSubmitting}>
           {formik.isSubmitting ? 'Submitting...' : 'Create Member'}
         </button>
