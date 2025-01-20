@@ -35,7 +35,9 @@ export const NewMemberPage = () => {
         <Input name="role" label="Role" formik={formik} />
         <Textarea name="text" label="Text" formik={formik} />
         {!formik.isValid && !!formik.submitCount && <div style={{ color: 'red' }}>Some fields are invalid</div>}
-        <button type="submit">Create Member</button>
+        <button type="submit" disabled={formik.isSubmitting}>
+          {formik.isSubmitting ? 'Submitting...' : 'Create Member'}
+        </button>
       </form>
     </Segment>
   )

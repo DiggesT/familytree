@@ -13,6 +13,7 @@ export const Textarea = ({ name, label, formik }: { name: string; label: string;
         value={value}
         name={name}
         id={name}
+        disabled={formik.isSubmitting}
       />
     </div>
   )
