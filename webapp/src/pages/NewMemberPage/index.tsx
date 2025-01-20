@@ -47,7 +47,7 @@ export const NewMemberPage = () => {
       >
         <Input name="firstName" label="First Name" formik={formik} />
         <Input name="lastName" label="Last Name" formik={formik} />
-        <Input name="role" label="Role" formik={formik} />
+        <Input name="role" label="Role" formik={formik} maxWidth={400} />
         <Textarea name="text" label="Text" formik={formik} />
         {!formik.isValid && !!formik.submitCount && <div style={{ color: 'red' }}>Some fields are invalid</div>}
         {!!submittingError && <div style={{ color: 'red' }}>{submittingError}</div>}
