@@ -3,6 +3,7 @@ import { useFormik } from 'formik'
 import { withZodSchema } from 'formik-validator-zod'
 import { useState } from 'react'
 import { Alert } from '../../components/Alert'
+import { Button } from '../../components/Button'
 import { Input } from '../../components/Input'
 import { Segment } from '../../components/Segment'
 import { Textarea } from '../../components/Textarea'
@@ -53,9 +54,7 @@ export const NewMemberPage = () => {
         {!formik.isValid && !!formik.submitCount && <div style={{ color: 'red' }}>Some fields are invalid</div>}
         {!!submittingError && <Alert color="red">{submittingError}</Alert>}
         {successMessageVisible && <Alert color="green">Member created!</Alert>}
-        <button type="submit" disabled={formik.isSubmitting}>
-          {formik.isSubmitting ? 'Submitting...' : 'Create Member'}
-        </button>
+        <Button loading={formik.isSubmitting}>Create Member</Button>
       </form>
     </Segment>
   )
