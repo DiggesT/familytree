@@ -1,6 +1,6 @@
+import { zCreateMemberTrpcInput } from '@familytree/backend/src/router/createMember/input'
 import { useFormik } from 'formik'
 import { withZodSchema } from 'formik-validator-zod'
-import { z } from 'zod'
 import { Input } from '../../components/Input'
 import { Segment } from '../../components/Segment'
 import { Textarea } from '../../components/Textarea'
@@ -16,13 +16,7 @@ export const NewMemberPage = () => {
       role: '',
       text: '',
     },
-    validate: withZodSchema(
-      z.object({
-        firstName: z.string().min(1, 'First Name is required'),
-        lastName: z.string().min(1, 'Last Name is required'),
-        role: z.string().min(1, 'Role is required'),
-      })
-    ),
+    validate: withZodSchema(zCreateMemberTrpcInput),
     onSubmit: async (values) => {
       await createMember.mutateAsync(values)
     },
