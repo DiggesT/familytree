@@ -4,6 +4,7 @@ import { withZodSchema } from 'formik-validator-zod'
 import { useState } from 'react'
 import { Alert } from '../../components/Alert'
 import { Button } from '../../components/Button'
+import { FormItems } from '../../components/FormItems'
 import { Input } from '../../components/Input'
 import { Segment } from '../../components/Segment'
 import { Textarea } from '../../components/Textarea'
@@ -47,14 +48,16 @@ export const NewMemberPage = () => {
           formik.handleSubmit()
         }}
       >
-        <Input name="firstName" label="First Name" formik={formik} />
-        <Input name="lastName" label="Last Name" formik={formik} />
-        <Input name="role" label="Role" formik={formik} maxWidth={400} />
-        <Textarea name="text" label="Text" formik={formik} />
-        {!formik.isValid && !!formik.submitCount && <div style={{ color: 'red' }}>Some fields are invalid</div>}
-        {!!submittingError && <Alert color="red">{submittingError}</Alert>}
-        {successMessageVisible && <Alert color="green">Member created!</Alert>}
-        <Button loading={formik.isSubmitting}>Create Member</Button>
+        <FormItems>
+          <Input name="firstName" label="First Name" formik={formik} />
+          <Input name="lastName" label="Last Name" formik={formik} />
+          <Input name="role" label="Role" formik={formik} maxWidth={400} />
+          <Textarea name="text" label="Text" formik={formik} />
+          {!formik.isValid && !!formik.submitCount && <div style={{ color: 'red' }}>Some fields are invalid</div>}
+          {!!submittingError && <Alert color="red">{submittingError}</Alert>}
+          {successMessageVisible && <Alert color="green">Member created!</Alert>}
+          <Button loading={formik.isSubmitting}>Create Member</Button>
+        </FormItems>
       </form>
     </Segment>
   )
