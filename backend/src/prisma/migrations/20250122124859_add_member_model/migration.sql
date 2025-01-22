@@ -1,5 +1,5 @@
 -- CreateTable
-CREATE TABLE "Idea" (
+CREATE TABLE "Member" (
     "id" TEXT NOT NULL,
     "lastName" TEXT NOT NULL,
     "firstName" TEXT NOT NULL,
@@ -7,5 +7,5 @@ CREATE TABLE "Idea" (
     "mother" TEXT NOT NULL,
     "father" TEXT NOT NULL,
 
-    CONSTRAINT "Idea_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "Member_pkey" PRIMARY KEY ("id")
 );

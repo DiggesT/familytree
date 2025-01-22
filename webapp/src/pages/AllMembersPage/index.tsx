@@ -18,16 +18,15 @@ export const AllMembersPage = () => {
   return (
     <Segment title="All Members">
       <div className={css.members}>
-        {data.members.map((member) => (
+        {data.map((member) => (
           <div className={css.member} key={member.id}>
             <Segment
               size={2}
               title={
                 <Link className={css.memberLink} to={getViewMemberRoute({ id: member.id })}>
-                  {`${member.firstName} ${member.lastName}`}
+                  {`${member.lastName} ${member.firstName} ${member.middleName}`}
                 </Link>
               }
-              description={member.role}
             />
           </div>
         ))}

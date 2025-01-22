@@ -1,7 +1,14 @@
-import _ from 'lodash'
-import { members } from '../../lib/members'
 import { trpc } from '../../lib/trpc'
 
-export const getMembersTrpcRoute = trpc.procedure.query(() => {
-  return { members: members.map((member) => _.pick(member, ['id', 'firstName', 'lastName', 'role'])) }
+export const getMembersTrpcRoute = trpc.procedure.query(async ({ ctx }) => {
+  const members = await ctx.prisma.member.findMany({
+    select: {
+      id: true,
+      lastName: true,
+      firstName: true,
+      middleName: true,
+    },
+  })
+
+  return members
 })
