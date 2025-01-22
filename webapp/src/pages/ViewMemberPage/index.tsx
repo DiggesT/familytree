@@ -1,3 +1,4 @@
+import { format } from 'date-fns'
 import { useParams } from 'react-router-dom'
 import { Segment } from '../../components/Segment'
 import { type ViewMemberRouteParams } from '../../lib/routes'
@@ -23,6 +24,7 @@ export const ViewMemberPage = () => {
 
   return (
     <Segment title={`${data.member.lastName} ${data.member.firstName} ${data.member.middleName}`}>
+      <div className={css.createdAt}>Created At: {format(data.member.createdAt, 'yyyy-MM-dd')}</div>
       <div className={css.text} dangerouslySetInnerHTML={{ __html: data.member.text }} />
     </Segment>
   )
