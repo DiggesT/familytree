@@ -17,9 +17,9 @@ export const NewMemberPage = () => {
 
   const formik = useFormik({
     initialValues: {
-      firstName: '',
       lastName: '',
-      role: '',
+      firstName: '',
+      middleName: '',
       text: '',
     },
     validate: withZodSchema(zCreateMemberTrpcInput),
@@ -49,9 +49,9 @@ export const NewMemberPage = () => {
         }}
       >
         <FormItems>
-          <Input name="firstName" label="First Name" formik={formik} />
           <Input name="lastName" label="Last Name" formik={formik} />
-          <Input name="role" label="Role" formik={formik} maxWidth={400} />
+          <Input name="firstName" label="First Name" formik={formik} />
+          <Input name="middleName" label="Middle Name" formik={formik} />
           <Textarea name="text" label="Text" formik={formik} />
           {!formik.isValid && !!formik.submitCount && <div style={{ color: 'red' }}>Some fields are invalid</div>}
           {!!submittingError && <Alert color="red">{submittingError}</Alert>}

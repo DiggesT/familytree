@@ -12,6 +12,7 @@ model Member {
   lastName   String
   firstName  String
   middleName String
+  text       String
   mother     String
   father     String
 }
