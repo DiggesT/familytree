@@ -8,11 +8,12 @@ datasource db {
 }
 
 model Member {
-  id         String @id @default(uuid())
+  id         String   @id @default(uuid())
   lastName   String
   firstName  String
   middleName String
   text       String
   mother     String
   father     String
+  createdAt  DateTime @default(now())
 }
