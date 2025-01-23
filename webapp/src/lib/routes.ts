@@ -8,8 +8,10 @@ export const viewMemberRouteParams = getRouteParams({ id: true })
 export type ViewMemberRouteParams = typeof viewMemberRouteParams
 export const getViewMemberRoute = ({ id }: ViewMemberRouteParams) => `/members/${id}`
 
-export const getNewMemberRoute = () => '/ideas/new'
+export const getNewMemberRoute = () => '/members/new'
 
-export const getSignUpRoute = () => 'sign-up'
+export const getSignUpRoute = () => '/sign-up'
 
-export const getSignInRoute = () => 'sign-in'
+export const getSignInRoute = () => '/sign-in'
+
+export const getSignOutRoute = () => '/sign-out'
