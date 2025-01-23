@@ -11,3 +11,5 @@ export const getViewMemberRoute = ({ id }: ViewMemberRouteParams) => `/members/$
 export const getNewMemberRoute = () => '/ideas/new'
 
 export const getSignUpRoute = () => 'sign-up'
+
+export const getSignInRoute = () => 'sign-in'
