@@ -1,31 +1,43 @@
-import { zCreateMemberTrpcInput } from '@familytree/backend/src/router/createMember/input'
+import { zSignUpTrpcInput } from '@familytree/backend/src/router/signUp/input'
 import { useFormik } from 'formik'
 import { withZodSchema } from 'formik-validator-zod'
 import { useState } from 'react'
+import { z } from 'zod'
 import { Alert } from '../../components/Alert'
 import { Button } from '../../components/Button'
 import { FormItems } from '../../components/FormItems'
 import { Input } from '../../components/Input'
 import { Segment } from '../../components/Segment'
-import { Textarea } from '../../components/Textarea'
 import { trpc } from '../../lib/trpc'
 
-export const NewMemberPage = () => {
+export const SignUpPage = () => {
   const [successMessageVisible, setSuccessMessageVisible] = useState(false)
   const [submittingError, setSubmittingError] = useState<string | null>(null)
-  const createMember = trpc.createMember.useMutation()
+  const signUp = trpc.signUp.useMutation()
 
   const formik = useFormik({
     initialValues: {
-      lastName: '',
-      firstName: '',
-      middleName: '',
-      text: '',
+      nick: '',
+      password: '',
+      passwordAgain: '',
     },
-    validate: withZodSchema(zCreateMemberTrpcInput),
+    validate: withZodSchema(
+      zSignUpTrpcInput
+        .extend({ passwordAgain: z.string().min(1, 'Password Again is required.') })
+        .superRefine((val, ctx) => {
+          if (val.password !== val.passwordAgain) {
+            ctx.addIssue({
+              code: z.ZodIssueCode.custom,
+              message: 'Passwords must be the same.',
+              path: ['passwordAgain'],
+            })
+          }
+        })
+    ),
     onSubmit: async (values) => {
       try {
-        await createMember.mutateAsync(values)
+        setSubmittingError(null)
+        await signUp.mutateAsync(values)
         formik.resetForm()
         setSuccessMessageVisible(true)
         setTimeout(() => {
@@ -33,15 +45,12 @@ export const NewMemberPage = () => {
         }, 3000)
       } catch (error: any) {
         setSubmittingError(error.message)
-        setTimeout(() => {
-          setSubmittingError(null)
-        }, 3000)
       }
     },
   })
 
   return (
-    <Segment title="New Member">
+    <Segment title="Sign Up">
       <form
         onSubmit={(e) => {
           e.preventDefault()
@@ -49,14 +58,13 @@ export const NewMemberPage = () => {
         }}
       >
         <FormItems>
-          <Input name="lastName" label="Last Name" formik={formik} />
-          <Input name="firstName" label="First Name" formik={formik} />
-          <Input name="middleName" label="Middle Name" formik={formik} />
-          <Textarea name="text" label="Text" formik={formik} />
+          <Input name="nick" label="Nick" formik={formik} />
+          <Input name="password" label="Password" type="password" formik={formik} />
+          <Input name="passwordAgain" label="Password Again" type="password" formik={formik} />
           {!formik.isValid && !!formik.submitCount && <div style={{ color: 'red' }}>Some fields are invalid.</div>}
           {!!submittingError && <Alert color="red">{submittingError}</Alert>}
-          {successMessageVisible && <Alert color="green">Member created!</Alert>}
-          <Button loading={formik.isSubmitting}>Create Member</Button>
+          {successMessageVisible && <Alert color="green">Thanks for sign up!</Alert>}
+          <Button loading={formik.isSubmitting}>Sign Up</Button>
         </FormItems>
       </form>
     </Segment>

@@ -9,3 +9,5 @@ export type ViewMemberRouteParams = typeof viewMemberRouteParams
 export const getViewMemberRoute = ({ id }: ViewMemberRouteParams) => `/members/${id}`
 
 export const getNewMemberRoute = () => '/ideas/new'
+
+export const getSignUpRoute = () => 'sign-up'
