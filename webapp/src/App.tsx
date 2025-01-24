@@ -3,6 +3,7 @@ import { Layout } from './components/Layout'
 import * as routes from './lib/routes'
 import { TrpcProvider } from './lib/trpc'
 import { AllMembersPage } from './pages/AllMembersPage'
+import { EditMemberPage } from './pages/EditMemberPage'
 import { NewMemberPage } from './pages/NewMemberPage/'
 import { SignInPage } from './pages/SignInPage'
 import { SignOutPage } from './pages/SignOutPage'
@@ -22,6 +23,7 @@ export const App = () => {
             <Route path={routes.getAllMembersRoute()} element={<AllMembersPage />} />
             <Route path={routes.getNewMemberRoute()} element={<NewMemberPage />} />
             <Route path={routes.getViewMemberRoute(routes.viewMemberRouteParams)} element={<ViewMemberPage />} />
+            <Route path={routes.getEditMemberRoute(routes.editMemberRouteParams)} element={<EditMemberPage />} />
           </Route>
         </Routes>
       </BrowserRouter>

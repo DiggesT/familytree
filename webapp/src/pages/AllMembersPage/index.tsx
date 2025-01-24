@@ -23,7 +23,7 @@ export const AllMembersPage = () => {
             <Segment
               size={2}
               title={
-                <Link className={css.memberLink} to={getViewMemberRoute({ id: member.id })}>
+                <Link className={css.memberLink} to={getViewMemberRoute({ memberId: member.id })}>
                   {`${member.lastName} ${member.firstName} ${member.middleName}`}
                 </Link>
               }
