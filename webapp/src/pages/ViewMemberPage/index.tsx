@@ -25,6 +25,7 @@ export const ViewMemberPage = () => {
   return (
     <Segment title={`${data.member.lastName} ${data.member.firstName} ${data.member.middleName}`}>
       <div className={css.createdAt}>Created At: {format(data.member.createdAt, 'yyyy-MM-dd')}</div>
+      <div className={css.createdBy}>Created By: {data.member.creator.nick}</div>
       <div className={css.text} dangerouslySetInnerHTML={{ __html: data.member.text }} />
     </Segment>
   )

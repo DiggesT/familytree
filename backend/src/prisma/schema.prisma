@@ -12,6 +12,7 @@ model User {
   nick      String   @unique
   password  String
   createdAt DateTime @default(now())
+  members   Member[]
 }
 
 model Member {
@@ -23,4 +24,6 @@ model Member {
   mother     String
   father     String
   createdAt  DateTime @default(now())
+  createdBy  String
+  creator    User     @relation(fields: [createdBy], references: [id])
 }

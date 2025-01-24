@@ -6,6 +6,14 @@ export const getMemberTrpcRoute = trpc.procedure.input(z.object({ id: z.string()
     where: {
       id: input.id,
     },
+    include: {
+      creator: {
+        select: {
+          id: true,
+          nick: true,
+        },
+      },
+    },
   })
   return { member }
 })
