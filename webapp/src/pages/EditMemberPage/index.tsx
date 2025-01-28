@@ -1,9 +1,6 @@
 import { type TrpcRouterOutput } from '@familytree/backend/src/router'
 import { zUpdateMemberTrpcInput } from '@familytree/backend/src/router/updateMember/input'
-import { useFormik } from 'formik'
-import { withZodSchema } from 'formik-validator-zod'
 import { pick } from 'lodash'
-import { useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { Alert } from '../../components/Alert'
 import { Button } from '../../components/Button'
@@ -11,25 +8,22 @@ import { FormItems } from '../../components/FormItems'
 import { Input } from '../../components/Input'
 import { Segment } from '../../components/Segment'
 import { Textarea } from '../../components/Textarea'
+import { useForm } from '../../lib/form'
 import { getViewMemberRoute, type EditMemberRouteParams } from '../../lib/routes'
 import { trpc } from '../../lib/trpc'
 
 const EditMemberComponent = ({ member }: { member: NonNullable<TrpcRouterOutput['getMember']['member']> }) => {
   const navigate = useNavigate()
-  const [submittingError, setSubmittingError] = useState<string | null>(null)
   const updateMember = trpc.updateMember.useMutation()
 
-  const formik = useFormik({
+  const { formik, alertProps, buttonProps } = useForm({
     initialValues: pick(member, ['id', 'lastName', 'firstName', 'middleName', 'text']),
-    validate: withZodSchema(zUpdateMemberTrpcInput.omit({ memberId: true })),
+    validationSchema: zUpdateMemberTrpcInput.omit({ memberId: true }),
+    resetOnSuccess: false,
+    showValidationAlert: true,
     onSubmit: async (values) => {
-      try {
-        setSubmittingError(null)
-        await updateMember.mutateAsync({ memberId: member.id, ...values })
-        await navigate(getViewMemberRoute({ memberId: member.id }))
-      } catch (err: any) {
-        setSubmittingError(err.message)
-      }
+      await updateMember.mutateAsync({ memberId: member.id, ...values })
+      await navigate(getViewMemberRoute({ memberId: member.id }))
     },
   })
 
@@ -46,9 +40,8 @@ const EditMemberComponent = ({ member }: { member: NonNullable<TrpcRouterOutput[
           <Input name="firstName" label="First Name" formik={formik} />
           <Input name="middleName" label="Middle Name" formik={formik} />
           <Textarea name="text" label="Text" formik={formik} />
-          {!formik.isValid && !!formik.submitCount && <div style={{ color: 'red' }}>Some fields are invalid.</div>}
-          {!!submittingError && <Alert color="red">{submittingError}</Alert>}
-          <Button loading={formik.isSubmitting}>Update Member</Button>
+          <Alert {...alertProps} />
+          <Button {...buttonProps}>Update Member</Button>
         </FormItems>
       </form>
     </Segment>
