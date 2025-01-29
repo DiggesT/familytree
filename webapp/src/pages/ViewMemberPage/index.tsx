@@ -15,11 +15,9 @@ export const ViewMemberPage = withPageWrapper({
       id: memberId,
     })
   },
-  checkExists: ({ queryResult }) => !!queryResult.data.member,
-  checkExistsMessage: 'Member not found.',
-  setProps: ({ queryResult, ctx }) => ({
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    member: queryResult.data.member!,
+
+  setProps: ({ queryResult, ctx, checkExists }) => ({
+    member: checkExists(queryResult.data.member, 'Member not found.'),
     me: ctx.me,
   }),
 })(({ member, me }) => {

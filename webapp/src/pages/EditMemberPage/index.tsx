@@ -20,14 +20,11 @@ export const EditMemberPage = withPageWrapper({
       id: memberId,
     })
   },
-  checkExists: ({ queryResult }) => !!queryResult.data.member,
-  checkExistsMessage: 'Member not found.',
-  checkAccess: ({ queryResult, ctx }) => !!ctx.me && ctx.me.id === queryResult.data.member?.createdBy,
-  checkAccessMessage: 'An member can only be edited by the creator.',
-  setProps: ({ queryResult }) => ({
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    member: queryResult.data.member!,
-  }),
+  setProps: ({ queryResult, ctx, checkExists, checkAccess }) => {
+    const member = checkExists(queryResult.data.member, 'Member not found.')
+    checkAccess(ctx.me?.id === member.createdBy, 'An member can only be edited by the creator.')
+    return { member }
+  },
 })(({ member }) => {
   const navigate = useNavigate()
   const updateMember = trpc.updateMember.useMutation()
