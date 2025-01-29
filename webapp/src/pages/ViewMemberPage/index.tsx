@@ -2,6 +2,7 @@ import { format } from 'date-fns'
 import { useParams } from 'react-router-dom'
 import { LinkButton } from '../../components/Button'
 import { Segment } from '../../components/Segment'
+import { useMe } from '../../lib/ctx'
 import { getEditMemberRoute, type ViewMemberRouteParams } from '../../lib/routes'
 import { trpc } from '../../lib/trpc'
 import css from './index.module.scss'
@@ -13,9 +14,9 @@ export const ViewMemberPage = () => {
     id: memberId,
   })
 
-  const getMeResult = trpc.getMe.useQuery()
+  const me = useMe()
 
-  if (getMemberResult.isLoading || getMemberResult.isFetching || getMeResult.isLoading || getMeResult.isFetching) {
+  if (getMemberResult.isLoading || getMemberResult.isFetching) {
     return <span>Loading...</span>
   }
 
@@ -23,16 +24,11 @@ export const ViewMemberPage = () => {
     return <span>Error: {getMemberResult.error.message}</span>
   }
 
-  if (getMeResult.isError) {
-    return <span>Error: {getMeResult.error.message}</span>
-  }
-
   if (!getMemberResult.data.member) {
     return <span>Member not found.</span>
   }
 
   const member = getMemberResult.data.member
-  const me = getMeResult.data.me
 
   return (
     <Segment title={`${member.lastName} ${member.firstName} ${member.middleName}`}>

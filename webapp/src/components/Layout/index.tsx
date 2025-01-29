@@ -1,4 +1,5 @@
 import { Link, Outlet } from 'react-router-dom'
+import { useMe } from '../../lib/ctx'
 import {
   getAllMembersRoute,
   getNewMemberRoute,
@@ -6,18 +7,17 @@ import {
   getSignOutRoute,
   getSignUpRoute,
 } from '../../lib/routes'
-import { trpc } from '../../lib/trpc'
 import css from './index.module.scss'
 
 export const Layout = () => {
-  const { data, isLoading, isFetching, isError } = trpc.getMe.useQuery()
+  const me = useMe()
 
   return (
     <div className={css.layout}>
       <div className={css.navigation}>
         <div className={css.logo}>Family Tree</div>
         <ul className={css.menu}>
-          {isLoading || isFetching || isError ? null : data.me ? (
+          {me ? (
             <>
               <li className={css.item}>
                 <Link className={css.link} to={getAllMembersRoute()}>
@@ -31,13 +31,12 @@ export const Layout = () => {
               </li>
               <li className={css.item}>
                 <Link className={css.link} to={getSignOutRoute()}>
-                  Log Out ({data.me.nick})
+                  Log Out ({me.nick})
                 </Link>
               </li>
             </>
           ) : (
             <>
-              {' '}
               <li className={css.item}>
                 <Link className={css.link} to={getSignUpRoute()}>
                   Sign Up

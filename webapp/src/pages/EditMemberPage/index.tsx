@@ -8,6 +8,7 @@ import { FormItems } from '../../components/FormItems'
 import { Input } from '../../components/Input'
 import { Segment } from '../../components/Segment'
 import { Textarea } from '../../components/Textarea'
+import { useMe } from '../../lib/ctx'
 import { useForm } from '../../lib/form'
 import { getViewMemberRoute, type EditMemberRouteParams } from '../../lib/routes'
 import { trpc } from '../../lib/trpc'
@@ -55,9 +56,9 @@ export const EditMemberPage = () => {
     id: memberId,
   })
 
-  const getMeResult = trpc.getMe.useQuery()
+  const me = useMe()
 
-  if (getMemberResult.isLoading || getMemberResult.isFetching || getMeResult.isLoading || getMeResult.isFetching) {
+  if (getMemberResult.isLoading || getMemberResult.isFetching) {
     return <span>Loading...</span>
   }
 
@@ -65,16 +66,11 @@ export const EditMemberPage = () => {
     return <span>Error: {getMemberResult.error.message}</span>
   }
 
-  if (getMeResult.isError) {
-    return <span>Error: {getMeResult.error.message}</span>
-  }
-
   if (!getMemberResult.data.member) {
     return <span>Member not found.</span>
   }
 
   const member = getMemberResult.data.member
-  const me = getMeResult.data.me
 
   if (!me) {
     return <span>Only for authorized.</span>
