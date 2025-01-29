@@ -9,8 +9,8 @@ export const SignOutPage = () => {
   const trpcUtils = trpc.useUtils()
   useEffect(() => {
     Cookies.remove('token')
-    void trpcUtils.invalidate().then(async () => {
-      await navigate(getSignInRoute())
+    void trpcUtils.invalidate().then(() => {
+      void navigate(getSignInRoute())
     })
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])

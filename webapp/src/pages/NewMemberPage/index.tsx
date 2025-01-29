@@ -6,9 +6,12 @@ import { Input } from '../../components/Input'
 import { Segment } from '../../components/Segment'
 import { Textarea } from '../../components/Textarea'
 import { useForm } from '../../lib/form'
+import { withPageWrapper } from '../../lib/pageWrapper'
 import { trpc } from '../../lib/trpc'
 
-export const NewMemberPage = () => {
+export const NewMemberPage = withPageWrapper({
+  authorizedOnly: true,
+})(() => {
   const createMember = trpc.createMember.useMutation()
 
   const { formik, alertProps, buttonProps } = useForm({
@@ -45,4 +48,4 @@ export const NewMemberPage = () => {
       </form>
     </Segment>
   )
-}
+})

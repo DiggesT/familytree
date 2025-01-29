@@ -1,4 +1,3 @@
-import { type TrpcRouterOutput } from '@familytree/backend/src/router'
 import { zUpdateMemberTrpcInput } from '@familytree/backend/src/router/updateMember/input'
 import { pick } from 'lodash'
 import { useNavigate, useParams } from 'react-router-dom'
@@ -8,12 +7,28 @@ import { FormItems } from '../../components/FormItems'
 import { Input } from '../../components/Input'
 import { Segment } from '../../components/Segment'
 import { Textarea } from '../../components/Textarea'
-import { useMe } from '../../lib/ctx'
 import { useForm } from '../../lib/form'
+import { withPageWrapper } from '../../lib/pageWrapper'
 import { getViewMemberRoute, type EditMemberRouteParams } from '../../lib/routes'
 import { trpc } from '../../lib/trpc'
 
-const EditMemberComponent = ({ member }: { member: NonNullable<TrpcRouterOutput['getMember']['member']> }) => {
+export const EditMemberPage = withPageWrapper({
+  authorizedOnly: true,
+  useQuery: () => {
+    const { memberId } = useParams() as EditMemberRouteParams
+    return trpc.getMember.useQuery({
+      id: memberId,
+    })
+  },
+  checkExists: ({ queryResult }) => !!queryResult.data.member,
+  checkExistsMessage: 'Member not found.',
+  checkAccess: ({ queryResult, ctx }) => !!ctx.me && ctx.me.id === queryResult.data.member?.createdBy,
+  checkAccessMessage: 'An member can only be edited by the creator.',
+  setProps: ({ queryResult }) => ({
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    member: queryResult.data.member!,
+  }),
+})(({ member }) => {
   const navigate = useNavigate()
   const updateMember = trpc.updateMember.useMutation()
 
@@ -24,7 +39,7 @@ const EditMemberComponent = ({ member }: { member: NonNullable<TrpcRouterOutput[
     showValidationAlert: true,
     onSubmit: async (values) => {
       await updateMember.mutateAsync({ memberId: member.id, ...values })
-      await navigate(getViewMemberRoute({ memberId: member.id }))
+      void navigate(getViewMemberRoute({ memberId: member.id }))
     },
   })
 
@@ -47,38 +62,4 @@ const EditMemberComponent = ({ member }: { member: NonNullable<TrpcRouterOutput[
       </form>
     </Segment>
   )
-}
-
-export const EditMemberPage = () => {
-  const { memberId } = useParams() as EditMemberRouteParams
-
-  const getMemberResult = trpc.getMember.useQuery({
-    id: memberId,
-  })
-
-  const me = useMe()
-
-  if (getMemberResult.isLoading || getMemberResult.isFetching) {
-    return <span>Loading...</span>
-  }
-
-  if (getMemberResult.isError) {
-    return <span>Error: {getMemberResult.error.message}</span>
-  }
-
-  if (!getMemberResult.data.member) {
-    return <span>Member not found.</span>
-  }
-
-  const member = getMemberResult.data.member
-
-  if (!me) {
-    return <span>Only for authorized.</span>
-  }
-
-  if (me.id !== member.createdBy) {
-    return <span>An member can only be edited by the creator.</span>
-  }
-
-  return <EditMemberComponent member={member} />
-}
+})
