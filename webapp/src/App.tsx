@@ -6,6 +6,7 @@ import { TrpcProvider } from './lib/trpc'
 import { AllMembersPage } from './pages/AllMembersPage'
 import { EditMemberPage } from './pages/EditMemberPage'
 import { NewMemberPage } from './pages/NewMemberPage/'
+import { NotFoundPage } from './pages/NotFoundPage'
 import { SignInPage } from './pages/SignInPage'
 import { SignOutPage } from './pages/SignOutPage'
 import { SignUpPage } from './pages/SignUpPage'
@@ -26,6 +27,7 @@ export const App = () => {
               <Route path={routes.getNewMemberRoute()} element={<NewMemberPage />} />
               <Route path={routes.getViewMemberRoute(routes.viewMemberRouteParams)} element={<ViewMemberPage />} />
               <Route path={routes.getEditMemberRoute(routes.editMemberRouteParams)} element={<EditMemberPage />} />
+              <Route path="*" element={<NotFoundPage />} />
             </Route>
           </Routes>
         </BrowserRouter>

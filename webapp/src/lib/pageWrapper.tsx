@@ -2,6 +2,7 @@ import { type UseTRPCQuerySuccessResult, type UseTRPCQueryResult } from '@trpc/r
 import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { ErrorPageComponent } from '../components/ErrorPageComponent'
+import { NotFoundPage } from '../pages/NotFoundPage'
 import { useAppContext, type AppContext } from './ctx'
 import { getAllMembersRoute } from './routes'
 
@@ -61,8 +62,8 @@ const PageWrapper = <TProps extends Props, TQueryResult extends QueryResult | un
   checkAccessTitle = 'Access Denied.',
   checkAccessMessage = 'You have no access to this page.',
   checkExists,
-  checkExistsTitle = 'Not Found.',
-  checkExistsMessage = 'This page does not exist.',
+  checkExistsTitle,
+  checkExistsMessage,
   useQuery,
   setProps,
   Page,
@@ -102,7 +103,7 @@ const PageWrapper = <TProps extends Props, TQueryResult extends QueryResult | un
   if (checkExists) {
     const notExist = !checkExists(helperProps)
     if (notExist) {
-      return <ErrorPageComponent title={checkExistsTitle} message={checkExistsMessage} />
+      return <NotFoundPage title={checkExistsTitle} message={checkExistsMessage} />
     }
   }
 
