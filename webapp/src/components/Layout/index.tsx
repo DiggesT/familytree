@@ -2,6 +2,7 @@ import { Link, Outlet } from 'react-router-dom'
 import { useMe } from '../../lib/ctx'
 import {
   getAllMembersRoute,
+  getEditProfileRoute,
   getNewMemberRoute,
   getSignInRoute,
   getSignOutRoute,
@@ -27,6 +28,11 @@ export const Layout = () => {
               <li className={css.item}>
                 <Link className={css.link} to={getNewMemberRoute()}>
                   Add Member
+                </Link>
+              </li>
+              <li className={css.item}>
+                <Link className={css.link} to={getEditProfileRoute()}>
+                  Edit Profile
                 </Link>
               </li>
               <li className={css.item}>

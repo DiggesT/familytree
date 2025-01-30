@@ -14,6 +14,8 @@ export const getEditMemberRoute = ({ memberId }: EditMemberRouteParams) => `/mem
 
 export const getNewMemberRoute = () => '/members/new'
 
+export const getEditProfileRoute = () => '/edit-profile'
+
 export const getSignUpRoute = () => '/sign-up'
 
 export const getSignInRoute = () => '/sign-in'

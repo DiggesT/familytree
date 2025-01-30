@@ -24,7 +24,9 @@ export const ViewMemberPage = withPageWrapper({
   return (
     <Segment title={`${member.lastName} ${member.firstName} ${member.middleName}`}>
       <div className={css.createdAt}>Created At: {format(member.createdAt, 'yyyy-MM-dd')}</div>
-      <div className={css.createdBy}>Created By: {member.creator.nick}</div>
+      <div className={css.createdBy}>
+        Created By: {member.creator.nick} {member.creator.name ? `(${member.creator.name})` : ''}
+      </div>
       <div className={css.text} dangerouslySetInnerHTML={{ __html: member.text }} />
       {me?.id === member.createdBy && (
         <div className={css.editButton}>
