@@ -1,5 +1,7 @@
+import InfiniteScroll from 'react-infinite-scroller'
 import { Link } from 'react-router-dom'
 import { Alert } from '../../../components/Alert'
+import { layoutContentElRef } from '../../../components/Layout'
 import { Segment } from '../../../components/Segment'
 import { getViewMemberRoute } from '../../../lib/routes'
 import { trpc } from '../../../lib/trpc'
@@ -26,32 +28,37 @@ export const AllMembersPage = () => {
         <Alert color="red">{error.message}</Alert>
       ) : (
         <div className={css.members}>
-          {data.pages
-            .flatMap((page) => page.members)
-            .map((member) => (
-              <div className={css.member} key={member.id}>
-                <Segment
-                  size={2}
-                  title={
-                    <Link className={css.memberLink} to={getViewMemberRoute({ memberId: member.id })}>
-                      {`${member.lastName} ${member.firstName} ${member.middleName}`}
-                    </Link>
-                  }
-                />
+          <InfiniteScroll
+            threshold={100}
+            loadMore={() => {
+              if (!isFetchingNextPage && hasNextPage) {
+                void fetchNextPage()
+              }
+            }}
+            hasMore={hasNextPage}
+            loader={
+              <div className={css.more} key="loader">
+                Loading...
               </div>
-            ))}
-          <div className={css.more}>
-            {hasNextPage && !isFetchingNextPage && (
-              <button
-                onClick={() => {
-                  void fetchNextPage()
-                }}
-              >
-                Load more
-              </button>
-            )}
-            {isFetchingNextPage && <span>Loading...</span>}
-          </div>
+            }
+            getScrollParent={() => layoutContentElRef.current}
+            useWindow={(layoutContentElRef.current && getComputedStyle(layoutContentElRef.current).overflow) !== 'auto'}
+          >
+            {data.pages
+              .flatMap((page) => page.members)
+              .map((member) => (
+                <div className={css.member} key={member.id}>
+                  <Segment
+                    size={2}
+                    title={
+                      <Link className={css.memberLink} to={getViewMemberRoute({ memberId: member.id })}>
+                        {`${member.lastName} ${member.firstName} ${member.middleName}`}
+                      </Link>
+                    }
+                  />
+                </div>
+              ))}
+          </InfiniteScroll>
         </div>
       )}
     </Segment>
