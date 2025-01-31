@@ -17,14 +17,15 @@ model User {
 }
 
 model Member {
-  id         String   @id @default(uuid())
-  lastName   String
-  firstName  String
-  middleName String
-  text       String
-  mother     String
-  father     String
-  createdAt  DateTime @default(now())
-  createdBy  String
-  creator    User     @relation(fields: [createdBy], references: [id])
+  id           String   @id @default(uuid())
+  serialNumber Int      @unique @default(autoincrement())
+  lastName     String
+  firstName    String
+  middleName   String
+  text         String
+  mother       String
+  father       String
+  createdAt    DateTime @default(now())
+  createdBy    String
+  creator      User     @relation(fields: [createdBy], references: [id])
 }
