@@ -40,7 +40,6 @@ export const SignInPage = withPageWrapper({
         <FormItems>
           <Input name="nick" label="Nick" formik={formik} />
           <Input name="password" label="Password" type="password" formik={formik} />
-          {!formik.isValid && !!formik.submitCount && <div style={{ color: 'red' }}>Some fields are invalid.</div>}
           <Alert {...alertProps} />
           <Button {...buttonProps}>Sign In</Button>
         </FormItems>

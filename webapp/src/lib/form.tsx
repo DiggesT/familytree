@@ -38,7 +38,7 @@ export const useForm = <TZodSchema extends z.ZodTypeAny>({
           setSuccessMessageVisible(false)
         }, 3000)
       } catch (error: any) {
-        setSubmittingError(error.message)
+        setSubmittingError(error)
       }
     },
   })
