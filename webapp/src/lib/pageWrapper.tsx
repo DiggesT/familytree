@@ -2,6 +2,7 @@ import { type UseTRPCQuerySuccessResult, type UseTRPCQueryResult } from '@trpc/r
 import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { ErrorPageComponent } from '../components/ErrorPageComponent'
+import { Loader } from '../components/Loader'
 import { NotFoundPage } from '../pages/other/NotFoundPage'
 import { useAppContext, type AppContext } from './ctx'
 import { getAllMembersRoute } from './routes'
@@ -82,7 +83,7 @@ const PageWrapper = <TProps extends Props, TQueryResult extends QueryResult | un
   }, [redirectNeeded, navigate])
 
   if (queryResult?.isLoading || queryResult?.isFetching || redirectNeeded) {
-    return <p>Loading...</p>
+    return <Loader type="page" />
   }
 
   if (queryResult?.isError) {
