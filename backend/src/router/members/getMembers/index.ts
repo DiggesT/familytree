@@ -2,6 +2,7 @@ import { trpc } from '../../../lib/trpc'
 import { zGetMembersTrpcInput } from './input'
 
 export const getMembersTrpcRoute = trpc.procedure.input(zGetMembersTrpcInput).query(async ({ ctx, input }) => {
+  const normalizedSearch = input.search ? input.search.trim().replace(/[\s\n\t]/g, '&') : undefined
   const members = await ctx.prisma.member.findMany({
     select: {
       id: true,
@@ -10,6 +11,27 @@ export const getMembersTrpcRoute = trpc.procedure.input(zGetMembersTrpcInput).qu
       middleName: true,
       serialNumber: true,
     },
+    where: !input.search
+      ? undefined
+      : {
+          OR: [
+            {
+              firstName: {
+                search: normalizedSearch,
+              },
+            },
+            {
+              lastName: {
+                search: normalizedSearch,
+              },
+            },
+            {
+              middleName: {
+                search: normalizedSearch,
+              },
+            },
+          ],
+        },
     orderBy: [
       {
         createdAt: 'desc',

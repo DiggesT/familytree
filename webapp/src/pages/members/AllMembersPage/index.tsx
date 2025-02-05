@@ -1,18 +1,27 @@
+import { zGetMembersTrpcInput } from '@familytree/backend/src/router/members/getMembers/input'
 import InfiniteScroll from 'react-infinite-scroller'
 import { Link } from 'react-router-dom'
+import { useDebounceValue } from 'usehooks-ts'
 import { Alert } from '../../../components/Alert'
+import { Input } from '../../../components/Input'
 import { layoutContentElRef } from '../../../components/Layout'
 import { Loader } from '../../../components/Loader'
 import { Segment } from '../../../components/Segment'
+import { useForm } from '../../../lib/form'
 import { getViewMemberRoute } from '../../../lib/routes'
 import { trpc } from '../../../lib/trpc'
 import css from './index.module.scss'
 
 export const AllMembersPage = () => {
+  const { formik } = useForm({
+    initialValues: { search: '' },
+    validationSchema: zGetMembersTrpcInput.pick({ search: true }),
+  })
+  const [search] = useDebounceValue(formik.values.search, 500)
   const { data, error, isLoading, isError, hasNextPage, fetchNextPage, isFetchingNextPage, isRefetching } =
     trpc.getMembers.useInfiniteQuery(
       {
-        limit: 2,
+        search,
       },
       {
         getNextPageParam: (lastPage) => {
@@ -23,10 +32,15 @@ export const AllMembersPage = () => {
 
   return (
     <Segment title="All Members">
+      <div className={css.filter}>
+        <Input maxWidth={'100%'} label="Search" name="search" formik={formik} />
+      </div>
       {isLoading || isRefetching ? (
         <Loader type="section" />
       ) : isError ? (
         <Alert color="red">{error.message}</Alert>
+      ) : !data.pages[0].members.length ? (
+        <Alert color="brown">Nothing found by search.</Alert>
       ) : (
         <div className={css.members}>
           <InfiniteScroll

@@ -32,6 +32,7 @@
     "reset-css": "^5.0.2",
     "sass": "^1.83.4",
     "superjson": "1.x",
+    "usehooks-ts": "^3.1.0",
     "zod": "^3.24.1"
   },
   "devDependencies": {
