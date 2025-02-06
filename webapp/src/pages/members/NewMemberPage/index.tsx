@@ -11,6 +11,7 @@ import { trpc } from '../../../lib/trpc'
 
 export const NewMemberPage = withPageWrapper({
   authorizedOnly: true,
+  title: 'New Member',
 })(() => {
   const createMember = trpc.createMember.useMutation()
 

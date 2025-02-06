@@ -25,6 +25,7 @@ export const EditMemberPage = withPageWrapper({
     checkAccess(ctx.me?.id === member.createdBy, 'An member can only be edited by the creator.')
     return { member }
   },
+  title: ({ member }) => `Edit Member "${member.lastName} ${member.firstName} ${member.middleName}"`,
 })(({ member }) => {
   const navigate = useNavigate()
   const updateMember = trpc.updateMember.useMutation()

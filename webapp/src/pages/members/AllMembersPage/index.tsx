@@ -8,11 +8,15 @@ import { layoutContentElRef } from '../../../components/Layout'
 import { Loader } from '../../../components/Loader'
 import { Segment } from '../../../components/Segment'
 import { useForm } from '../../../lib/form'
+import { withPageWrapper } from '../../../lib/pageWrapper'
 import { getViewMemberRoute } from '../../../lib/routes'
 import { trpc } from '../../../lib/trpc'
 import css from './index.module.scss'
 
-export const AllMembersPage = () => {
+export const AllMembersPage = withPageWrapper({
+  title: 'Family Tree',
+  isTitleExact: true,
+})(() => {
   const { formik } = useForm({
     initialValues: { search: '' },
     validationSchema: zGetMembersTrpcInput.pick({ search: true }),
@@ -78,4 +82,4 @@ export const AllMembersPage = () => {
       )}
     </Segment>
   )
-}
+})

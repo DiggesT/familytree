@@ -20,6 +20,7 @@ export const ViewMemberPage = withPageWrapper({
     member: checkExists(queryResult.data.member, 'Member not found.'),
     me: ctx.me,
   }),
+  title: ({ member }) => `${member.lastName} ${member.firstName} ${member.middleName}`,
 })(({ member, me }) => {
   return (
     <Segment title={`${member.lastName} ${member.firstName} ${member.middleName}`}>
