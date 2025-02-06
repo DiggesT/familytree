@@ -1,5 +1,5 @@
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
   previewFeatures = ["fullTextSearchPostgres"]
 }
 
@@ -9,12 +9,17 @@ datasource db {
 }
 
 model User {
-  id        String   @id @default(uuid())
-  nick      String   @unique
-  name      String   @default("")
-  password  String
-  createdAt DateTime @default(now())
-  members   Member[]
+  id          String           @id @default(uuid())
+  nick        String           @unique
+  name        String           @default("")
+  password    String
+  createdAt   DateTime         @default(now())
+  members     Member[]
+  permissions UserPermission[]
+}
+
+enum UserPermission {
+  ALL
 }
 
 model Member {
