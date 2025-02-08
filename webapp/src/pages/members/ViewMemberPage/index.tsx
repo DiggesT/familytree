@@ -29,8 +29,8 @@ export const ViewMemberPage = withPageWrapper({
       <div className={css.createdBy}>
         Created By: {member.creator.nick} {member.creator.name ? `(${member.creator.name})` : ''}
       </div>
-      <div className={css.parents}>Mother: {getParentsNames(member.mother)}</div>
-      <div className={css.parents}>Father: {getParentsNames(member.father)}</div>
+      <div className={css.parents}>Mother: {member.mother ? getParentsNames(member.mother) : 'Empty.'}</div>
+      <div className={css.parents}>Father: {member.father ? getParentsNames(member.father) : 'Empty.'}</div>
       <div className={css.text} dangerouslySetInnerHTML={{ __html: member.text }} />
       {me?.id === member.createdBy && (
         <div className={css.editButton}>
