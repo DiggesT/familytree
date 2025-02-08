@@ -2,6 +2,7 @@ import { format } from 'date-fns'
 import { useParams } from 'react-router-dom'
 import { LinkButton } from '../../../components/Button'
 import { Segment } from '../../../components/Segment'
+import { getParentsNames } from '../../../lib/getParentsNames'
 import { withPageWrapper } from '../../../lib/pageWrapper'
 import { getEditMemberRoute, type ViewMemberRouteParams } from '../../../lib/routes'
 import { trpc } from '../../../lib/trpc'
@@ -28,6 +29,8 @@ export const ViewMemberPage = withPageWrapper({
       <div className={css.createdBy}>
         Created By: {member.creator.nick} {member.creator.name ? `(${member.creator.name})` : ''}
       </div>
+      <div className={css.parents}>Mother: {getParentsNames(member.mother)}</div>
+      <div className={css.parents}>Father: {getParentsNames(member.father)}</div>
       <div className={css.text} dangerouslySetInnerHTML={{ __html: member.text }} />
       {me?.id === member.createdBy && (
         <div className={css.editButton}>
