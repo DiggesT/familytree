@@ -12,8 +12,9 @@ export const getMembersTrpcRoute = trpc.procedure.input(zGetMembersTrpcInput).qu
       serialNumber: true,
     },
     where: !input.search
-      ? undefined
+      ? { createdBy: input.creator } // TODO: recurring condition
       : {
+          createdBy: input.creator, // TODO: recurring condition
           OR: [
             {
               firstName: {

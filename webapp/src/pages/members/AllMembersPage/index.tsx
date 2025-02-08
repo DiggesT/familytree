@@ -16,7 +16,8 @@ import css from './index.module.scss'
 export const AllMembersPage = withPageWrapper({
   title: 'Family Tree',
   isTitleExact: true,
-})(() => {
+  setProps: ({ getAuthorizedMe }) => ({ me: getAuthorizedMe() }),
+})(({ me }) => {
   const { formik } = useForm({
     initialValues: { search: '' },
     validationSchema: zGetMembersTrpcInput.pick({ search: true }),
@@ -25,6 +26,7 @@ export const AllMembersPage = withPageWrapper({
   const { data, error, isLoading, isError, hasNextPage, fetchNextPage, isFetchingNextPage, isRefetching } =
     trpc.getMembers.useInfiniteQuery(
       {
+        creator: me.id,
         search,
       },
       {
@@ -43,6 +45,8 @@ export const AllMembersPage = withPageWrapper({
         <Loader type="section" />
       ) : isError ? (
         <Alert color="red">{error.message}</Alert>
+      ) : !data.pages[0].members.length && !formik.values.search ? (
+        <Alert color="brown">Empty for now.</Alert> // FIX: showing after "Nothing found by search" alert when clear search
       ) : !data.pages[0].members.length ? (
         <Alert color="brown">Nothing found by search.</Alert>
       ) : (
