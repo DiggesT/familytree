@@ -6,6 +6,8 @@ export const getMembersTrpcRoute = trpc.procedure.input(zGetMembersTrpcInput).qu
   const members = await ctx.prisma.member.findMany({
     select: {
       id: true,
+      mother: true,
+      father: true,
       lastName: true,
       firstName: true,
       middleName: true,
