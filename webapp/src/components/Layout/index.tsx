@@ -6,6 +6,7 @@ import {
   getAllMembersRoute,
   getEditProfileRoute,
   getNewMemberRoute,
+  getShowTreeRoute,
   getSignInRoute,
   getSignOutRoute,
   getSignUpRoute,
@@ -24,6 +25,11 @@ export const Layout = () => {
         <ul className={css.menu}>
           {me ? (
             <>
+              <li className={css.item}>
+                <Link className={css.link} to={getShowTreeRoute()}>
+                  Show Tree
+                </Link>
+              </li>
               <li className={css.item}>
                 <Link className={css.link} to={getAllMembersRoute()}>
                   All Members

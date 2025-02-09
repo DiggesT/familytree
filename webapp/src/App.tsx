@@ -13,6 +13,7 @@ import { EditMemberPage } from './pages/members/EditMemberPage'
 import { NewMemberPage } from './pages/members/NewMemberPage/'
 import { ViewMemberPage } from './pages/members/ViewMemberPage'
 import { NotFoundPage } from './pages/other/NotFoundPage'
+import { ShowTreePage } from './pages/tree/ShowTreePage'
 import './styles/global.scss'
 
 export const App = () => {
@@ -26,6 +27,7 @@ export const App = () => {
               <Route element={<Layout />}>
                 <Route path={routes.getSignUpRoute()} element={<SignUpPage />} />
                 <Route path={routes.getSignInRoute()} element={<SignInPage />} />
+                <Route path={routes.getShowTreeRoute()} element={<ShowTreePage />} />
                 <Route path={routes.getAllMembersRoute()} element={<AllMembersPage />} />
                 <Route path={routes.getNewMemberRoute()} element={<NewMemberPage />} />
                 <Route path={routes.getEditProfileRoute()} element={<EditProfilePage />} />

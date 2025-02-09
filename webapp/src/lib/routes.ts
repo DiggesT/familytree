@@ -12,6 +12,8 @@ export const editMemberRouteParams = getRouteParams({ memberId: true })
 export type EditMemberRouteParams = typeof editMemberRouteParams
 export const getEditMemberRoute = ({ memberId }: EditMemberRouteParams) => `/members/${memberId}/edit`
 
+export const getShowTreeRoute = () => '/tree/show'
+
 export const getNewMemberRoute = () => '/members/new'
 
 export const getEditProfileRoute = () => '/edit-profile'
