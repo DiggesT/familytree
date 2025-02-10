@@ -1,6 +1,19 @@
 type row = { id: string; mother: string; father: string }
 type sortedRow = row & { level: number }
 
+export function groupTree(arr: sortedRow[], depth: number): sortedRow[][] {
+  if (!arr.length) {
+    return []
+  }
+  return [
+    arr.filter((value) => value.level === depth),
+    ...groupTree(
+      arr.filter((value) => value.level !== depth),
+      depth + 1
+    ),
+  ]
+}
+
 export const getTree = ({ currentRow, arr, depth }: { currentRow: row; arr: row[]; depth: number }): sortedRow[] => {
   const childrensRows = arr.filter((value) => value.mother === currentRow.id || value.father === currentRow.id)
   const motherRow = arr.find((value) => value.id === currentRow.mother)

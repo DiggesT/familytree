@@ -1,5 +1,5 @@
 import { Segment } from '../../../components/Segment'
-import { getTree } from '../../../lib/getTree'
+import { getTree, groupTree } from '../../../lib/getTree'
 import { trpc } from '../../../lib/trpc'
 
 export const ShowTreePage = () => {
@@ -12,15 +12,13 @@ export const ShowTreePage = () => {
   const arr = data.members.map((value) => {
     return { id: value.id, mother: value.mother, father: value.father }
   })
-  const sortedArr = getTree({ currentRow: arr[arr.length - 1], arr, depth: 0 })
+  const groupedArr = groupTree(getTree({ currentRow: arr[arr.length - 1], arr, depth: 0 }), 0)
   return (
     <Segment title="Show Tree">
-      <span>Sorted array:</span>
+      <span>Sorted and grouped array:</span>
       <div>
-        {sortedArr.map((value) => (
-          <p key={value.id}>
-            Id: {value.id} Level: {value.level}
-          </p>
+        {groupedArr.map((value, index) => (
+          <p key={index}>Level: {value.map((value) => `${value.level} `)}</p>
         ))}
       </div>
     </Segment>
