@@ -11,11 +11,33 @@ export const getTree = ({
   depth: number
   acc: sortedRow[]
 }): sortedRow[] => {
+  const childrensRows = arr.filter((value) => value.mother === currentRow.id || value.father === currentRow.id)
   const motherRow = arr.find((value) => value.id === currentRow.mother)
   const fatherRow = arr.find((value) => value.id === currentRow.father)
 
-  const newAccM = motherRow ? getTree({ currentRow: motherRow, arr, depth: depth + 1, acc }) : acc
-  const newAccF = fatherRow ? getTree({ currentRow: fatherRow, arr, depth: depth + 1, acc }) : acc
+  const newAccC = childrensRows
+    .map((value) => {
+      return getTree({
+        currentRow: value,
+        arr: arr.filter((value2) => value2.id !== value.mother && value2.id !== value.father),
+        depth: depth - 1,
+        acc,
+      })
+    })
+    .flatMap((value) => value)
 
-  return [...newAccM, ...newAccF, { ...currentRow, level: depth }]
+  const newAccM = motherRow
+    ? getTree({ currentRow: motherRow, arr: arr.filter((value) => value.id !== currentRow.id), depth: depth + 1, acc })
+    : []
+
+  const newAccF = fatherRow
+    ? getTree({
+        currentRow: fatherRow,
+        arr: arr.filter((value) => value.id !== currentRow.id && value.mother !== currentRow.mother),
+        depth: depth + 1,
+        acc,
+      })
+    : []
+
+  return [...newAccC, ...newAccM, ...newAccF, { ...currentRow, level: depth }]
 }
