@@ -12,7 +12,7 @@ export const ShowTreePage = () => {
   const arr = data.members.map((value) => {
     return { id: value.id, mother: value.mother, father: value.father }
   })
-  const sortedArr = getTree({ currentRow: arr[arr.length - 1], arr, depth: 0, acc: [] })
+  const sortedArr = getTree({ currentRow: arr[arr.length - 1], arr, depth: 0 })
   return (
     <Segment title="Show Tree">
       <span>Sorted array:</span>
