@@ -2,7 +2,7 @@ import { format } from 'date-fns'
 import { useParams } from 'react-router-dom'
 import { LinkButton } from '../../../components/Button'
 import { Segment } from '../../../components/Segment'
-import { getParentsNames } from '../../../lib/getParentsNames'
+import { getMemberName } from '../../../lib/getMemberName'
 import { withPageWrapper } from '../../../lib/pageWrapper'
 import { getEditMemberRoute, type ViewMemberRouteParams } from '../../../lib/routes'
 import { trpc } from '../../../lib/trpc'
@@ -29,8 +29,12 @@ export const ViewMemberPage = withPageWrapper({
       <div className={css.createdBy}>
         Created By: {member.creator.nick} {member.creator.name ? `(${member.creator.name})` : ''}
       </div>
-      <div className={css.parents}>Mother: {member.mother ? getParentsNames(member.mother) : 'Empty.'}</div>
-      <div className={css.parents}>Father: {member.father ? getParentsNames(member.father) : 'Empty.'}</div>
+      <div className={css.parents}>
+        Mother: {member.mother ? getMemberName(member.mother) || 'Not found.' : 'Empty.'}
+      </div>
+      <div className={css.parents}>
+        Father: {member.father ? getMemberName(member.father) || 'Not found.' : 'Empty.'}
+      </div>
       <div className={css.text} dangerouslySetInnerHTML={{ __html: member.text }} />
       {me?.id === member.createdBy && (
         <div className={css.editButton}>
