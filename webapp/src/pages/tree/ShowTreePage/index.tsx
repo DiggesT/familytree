@@ -13,17 +13,19 @@ export const ShowTreePage = () => {
   const members = data.members.map((member) => {
     return { id: member.id, mother: member.mother, father: member.father }
   })
+
   const membersWithLevel = groupMembersByLevel(setMemberLevel(members[members.length - 1], members, 0), 0)
+
+  const tree = membersWithLevel.map((memberLevel, indexLevel) =>
+    memberLevel.map((_member, index) => <Member y={indexLevel * 125} x={index * 150} />)
+  )
+
   return (
     <Segment title="Tree Name">
       <div>
-        {membersWithLevel.map((member, index) => (
-          <div key={index}>
-            {member.map(() => (
-              <Member />
-            ))}
-          </div>
-        ))}
+        <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="700" height="500">
+          {tree}
+        </svg>
       </div>
     </Segment>
   )
