@@ -1,4 +1,4 @@
-import Member from '../../../assets/images/example.svg?react'
+import Member from '../../../assets/images/memberIcon.svg?react'
 import { Segment } from '../../../components/Segment'
 import { setMemberLevel, groupMembersByLevel } from '../../../lib/setMemberLevel'
 import { trpc } from '../../../lib/trpc'
@@ -18,11 +18,11 @@ export const ShowTreePage = () => {
     <Segment title="Tree Name">
       <div>
         {membersWithLevel.map((member, index) => (
-          <p key={index}>
+          <div key={index}>
             {member.map(() => (
               <Member />
             ))}
-          </p>
+          </div>
         ))}
       </div>
     </Segment>
