@@ -14,22 +14,23 @@ export function groupMembersByLevel(arr: memberWithLevel[], depth: number): memb
   ]
 }
 
+// TODO: update function with children search (also build tree functions)
 export function setMemberLevel(currentMember: member, members: member[], level: number): memberWithLevel[] {
-  const memberChildrens = members.filter(
-    (member) => member.mother === currentMember.id || member.father === currentMember.id
-  )
+  // const memberChildrens = members.filter(
+  //   (member) => member.mother === currentMember.id || member.father === currentMember.id
+  // )
   const memberMother = members.find((member) => member.id === currentMember.mother)
   const memberFather = members.find((member) => member.id === currentMember.father)
 
-  const memberChildrensWithLevel = memberChildrens
-    .map((children) => {
-      return setMemberLevel(
-        children,
-        members.filter((member) => member.id !== children.mother && member.id !== children.father),
-        level - 1
-      )
-    })
-    .flatMap((member) => member)
+  // const memberChildrensWithLevel = memberChildrens
+  //   .map((children) => {
+  //     return setMemberLevel(
+  //       children,
+  //       members.filter((member) => member.id !== children.mother && member.id !== children.father),
+  //       level - 1
+  //     )
+  //   })
+  //   .flatMap((member) => member)
 
   const memberMotherWithLevel = memberMother
     ? setMemberLevel(
@@ -47,5 +48,10 @@ export function setMemberLevel(currentMember: member, members: member[], level: 
       )
     : []
 
-  return [...memberChildrensWithLevel, ...memberMotherWithLevel, ...memberFatherWithLevel, { ...currentMember, level }]
+  return [
+    // ...memberChildrensWithLevel,
+    ...memberMotherWithLevel,
+    ...memberFatherWithLevel,
+    { ...currentMember, level },
+  ]
 }

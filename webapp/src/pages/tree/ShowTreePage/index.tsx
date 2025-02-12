@@ -10,20 +10,14 @@ export const ShowTreePage = () => {
     return <></>
   }
 
-  const members = data.members
-    .map((member) => {
-      return {
-        id: member.id,
-        mother: member.mother,
-        father: member.father,
-        name: `${member.lastName} ${member.firstName}`,
-      }
-    })
-    // TODO: remove this filter
-    .filter(
-      (member) =>
-        member.id !== '72a32a50-23ab-416a-b308-e68e5c2ff838' && member.id !== '1e8c979b-5275-4c7b-9ad8-d11126183590'
-    )
+  const members = data.members.map((member) => {
+    return {
+      id: member.id,
+      mother: member.mother,
+      father: member.father,
+      name: `${member.lastName} ${member.firstName}`,
+    }
+  })
 
   const membersWithLevel = groupMembersByLevel(setMemberLevel(members[members.length - 1], members, 0), 0) // TODO: find current member
 
@@ -67,7 +61,7 @@ export const ShowTreePage = () => {
   return (
     <Segment title="Tree Name">
       <div>
-        <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="1000" height="550">
+        <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="1150" height="550">
           {tree}
           {branches}
         </svg>
