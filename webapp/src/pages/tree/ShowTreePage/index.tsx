@@ -35,12 +35,13 @@ export const ShowTreePage = () => {
   )
 
   const branches = membersWithLevel.map((memberLevel, indexLevel) =>
-    memberLevel.map((_member, index) => {
+    memberLevel.map((member, index) => {
       if (indexLevel === 0) {
-        return <></> // TODO: skip branch for root member
+        return undefined // TODO: skip branch for root member
       }
       return (
         <line
+          key={member.id}
           x1={75 * (2 ** (maxLevel - indexLevel - 1) - 1) + 75 * 2 ** (maxLevel - indexLevel) * index + 50}
           y1={indexLevel * 150}
           x2={
@@ -52,7 +53,7 @@ export const ShowTreePage = () => {
           y2={indexLevel * 150 - 50}
           stroke="black"
           fill="transparent"
-          stroke-width="2"
+          strokeWidth="2"
         />
       )
     })
