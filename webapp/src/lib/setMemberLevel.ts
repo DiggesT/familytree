@@ -1,4 +1,4 @@
-type member = { id: string; mother: string; father: string }
+type member = { id: string; mother: string; father: string; name: string }
 type memberWithLevel = member & { level: number }
 
 export function groupMembersByLevel(arr: memberWithLevel[], depth: number): memberWithLevel[][] {
