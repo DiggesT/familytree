@@ -1,12 +1,27 @@
+import { useState } from 'react'
 import { Segment } from '../../../components/Segment'
 import { TreeMemberIcon } from '../../../components/Tree'
+import { withPageWrapper } from '../../../lib/pageWrapper'
 import { setMemberLevel, groupMembersByLevel } from '../../../lib/setMemberLevel'
 import { trpc } from '../../../lib/trpc'
+import css from './index.module.scss'
 
-export const ShowTreePage = () => {
-  const { data } = trpc.getMembers.useQuery({ creator: 'f1ed7244-a4c9-4d30-9409-77bea03d6d80', limit: 100 }) // TODO: set creator with pageWrapper - getAuthMe
+export const ShowTreePage = withPageWrapper({
+  title: 'Show Tree',
+  setProps: ({ getAuthorizedMe }) => ({
+    me: getAuthorizedMe(),
+  }),
+})(({ me }) => {
+  const [currentMember, setCurrenMember] = useState<{ id: string; mother: string; father: string; name: string }>({
+    id: '',
+    mother: '',
+    father: '',
+    name: '',
+  })
 
-  if (!data?.members) {
+  const { data } = trpc.getMembers.useQuery({ creator: me.id, limit: 100 })
+
+  if (!data?.members && data?.members.length !== 0) {
     return <></>
   }
 
@@ -19,7 +34,17 @@ export const ShowTreePage = () => {
     }
   })
 
-  const membersWithLevel = groupMembersByLevel(setMemberLevel(members[members.length - 1], members, 0), 0) // TODO: find current member
+  if (currentMember.id === '') {
+    setCurrenMember(members[0])
+  }
+
+  const memberOptions = data.members.map((member, index) => (
+    <option key={index} value={member.id}>
+      {member.lastName} {member.firstName} {member.middleName}
+    </option>
+  ))
+
+  const membersWithLevel = groupMembersByLevel(setMemberLevel(currentMember, members, 0), 0) // TODO: find current member
 
   const maxLevel = membersWithLevel.length
   const width = 100 + (2 ** (maxLevel - 1) - 1) * 150
@@ -64,6 +89,20 @@ export const ShowTreePage = () => {
   return (
     <Segment title="Tree Name">
       <div>
+        {/* TODO: add styles for select */}
+        <p>Select member:</p>
+        <select
+          defaultValue={currentMember.id}
+          onChange={(e) => {
+            e.preventDefault()
+            const selectedMember = members.find((member) => member.id === e.target.value)
+            selectedMember && setCurrenMember(selectedMember)
+          }}
+        >
+          {memberOptions}
+        </select>
+      </div>
+      <div className={css.tree}>
         <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width={width} height={height}>
           {tree}
           {branches}
@@ -71,4 +110,4 @@ export const ShowTreePage = () => {
       </div>
     </Segment>
   )
-}
+})
