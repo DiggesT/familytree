@@ -14,8 +14,7 @@ import { trpc } from '../../../lib/trpc'
 import css from './index.module.scss'
 
 export const AllMembersPage = withPageWrapper({
-  title: 'Family Tree',
-  isTitleExact: true,
+  title: 'All Members',
   setProps: ({ getAuthorizedMe }) => ({ me: getAuthorizedMe() }),
 })(({ me }) => {
   const { formik } = useForm({
