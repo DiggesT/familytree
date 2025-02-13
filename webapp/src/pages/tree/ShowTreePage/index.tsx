@@ -22,6 +22,8 @@ export const ShowTreePage = () => {
   const membersWithLevel = groupMembersByLevel(setMemberLevel(members[members.length - 1], members, 0), 0) // TODO: find current member
 
   const maxLevel = membersWithLevel.length
+  const width = 100 + (2 ** (maxLevel - 1) - 1) * 150
+  const height = 100 + (maxLevel - 1) * 150
 
   const tree = membersWithLevel.map((memberLevel, indexLevel) =>
     memberLevel.map((member, index) => (
@@ -62,7 +64,7 @@ export const ShowTreePage = () => {
   return (
     <Segment title="Tree Name">
       <div>
-        <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="1150" height="550">
+        <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width={width} height={height}>
           {tree}
           {branches}
         </svg>
