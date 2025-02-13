@@ -16,6 +16,7 @@ model User {
   password    String
   createdAt   DateTime         @default(now())
   members     Member[]
+  trees       Tree[]
   permissions UserPermission[]
 }
 
@@ -23,9 +24,20 @@ enum UserPermission {
   ALL
 }
 
+model Tree {
+  id        String   @id @default(uuid())
+  name      String
+  createdAt DateTime @default(now())
+  createdBy String
+  creator   User     @relation(fields: [createdBy], references: [id])
+  members   Member[]
+}
+
 model Member {
   id           String   @id @default(uuid())
   serialNumber Int      @unique @default(autoincrement())
+  treeId       String   
+  tree         Tree     @relation(fields: [treeId], references: [id])
   lastName     String
   firstName    String
   middleName   String
