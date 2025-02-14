@@ -6,6 +6,6 @@ export const createMemberTrpcRoute = trpc.procedure.input(zCreateMemberTrpcInput
     throw Error('Unauthorized (createMemberTrpcRoute).')
   }
 
-  await ctx.prisma.member.create({ data: { ...input, mother: '', father: '', createdBy: ctx.me.id } })
+  await ctx.prisma.member.create({ data: { ...input, mother: '', father: '', treeId: '', createdBy: ctx.me.id } }) // TODO: set treeId for member
   return true
 })
