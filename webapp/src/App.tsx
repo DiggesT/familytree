@@ -23,16 +23,16 @@ export const App = () => {
         <AppContextProvider>
           <BrowserRouter>
             <Routes>
-              <Route path={routes.getSignOutRoute()} element={<SignOutPage />} />
+              <Route path={routes.getSignOutRoute.definition} element={<SignOutPage />} />
               <Route element={<Layout />}>
-                <Route path={routes.getSignUpRoute()} element={<SignUpPage />} />
-                <Route path={routes.getSignInRoute()} element={<SignInPage />} />
-                <Route path={routes.getShowTreeRoute()} element={<ShowTreePage />} />
-                <Route path={routes.getAllMembersRoute()} element={<AllMembersPage />} />
-                <Route path={routes.getNewMemberRoute()} element={<NewMemberPage />} />
-                <Route path={routes.getEditProfileRoute()} element={<EditProfilePage />} />
-                <Route path={routes.getViewMemberRoute(routes.viewMemberRouteParams)} element={<ViewMemberPage />} />
-                <Route path={routes.getEditMemberRoute(routes.editMemberRouteParams)} element={<EditMemberPage />} />
+                <Route path={routes.getSignUpRoute.definition} element={<SignUpPage />} />
+                <Route path={routes.getSignInRoute.definition} element={<SignInPage />} />
+                <Route path={routes.getShowTreeRoute.definition} element={<ShowTreePage />} />
+                <Route path={routes.getAllMembersRoute.definition} element={<AllMembersPage />} />
+                <Route path={routes.getNewMemberRoute.definition} element={<NewMemberPage />} />
+                <Route path={routes.getEditProfileRoute.definition} element={<EditProfilePage />} />
+                <Route path={routes.getViewMemberRoute.definition} element={<ViewMemberPage />} />
+                <Route path={routes.getEditMemberRoute.definition} element={<EditMemberPage />} />
                 <Route path="*" element={<NotFoundPage />} />
               </Route>
             </Routes>

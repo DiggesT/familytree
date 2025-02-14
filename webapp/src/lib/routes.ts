@@ -1,25 +1,19 @@
-const getRouteParams = <T extends Record<string, boolean>>(object: T) => {
-  return Object.keys(object).reduce((acc, key) => ({ ...acc, [key]: `:${key}` }), {}) as Record<keyof T, string>
-}
+import { pgr } from '../utils/pumpGetRoute'
 
-export const getAllMembersRoute = () => '/'
+export const getAllMembersRoute = pgr(() => '/')
 
-export const viewMemberRouteParams = getRouteParams({ memberId: true })
-export type ViewMemberRouteParams = typeof viewMemberRouteParams
-export const getViewMemberRoute = ({ memberId }: ViewMemberRouteParams) => `/members/${memberId}`
+export const getSignInRoute = pgr(() => '/sign-in')
 
-export const editMemberRouteParams = getRouteParams({ memberId: true })
-export type EditMemberRouteParams = typeof editMemberRouteParams
-export const getEditMemberRoute = ({ memberId }: EditMemberRouteParams) => `/members/${memberId}/edit`
+export const getSignUpRoute = pgr(() => '/sign-up')
 
-export const getShowTreeRoute = () => '/tree/show'
+export const getSignOutRoute = pgr(() => '/sign-out')
 
-export const getNewMemberRoute = () => '/members/new'
+export const getEditProfileRoute = pgr(() => '/edit-profile')
 
-export const getEditProfileRoute = () => '/edit-profile'
+export const getShowTreeRoute = pgr(() => '/tree/show')
 
-export const getSignUpRoute = () => '/sign-up'
+export const getNewMemberRoute = pgr(() => '/members/new')
 
-export const getSignInRoute = () => '/sign-in'
+export const getViewMemberRoute = pgr({ memberId: true }, ({ memberId }) => `/members/${memberId}`)
 
-export const getSignOutRoute = () => '/sign-out'
+export const getEditMemberRoute = pgr({ memberId: true }, ({ memberId }) => `/members/${memberId}/edit`)

@@ -1,17 +1,16 @@
 import { format } from 'date-fns'
-import { useParams } from 'react-router-dom'
 import { LinkButton } from '../../../components/Button'
 import { Segment } from '../../../components/Segment'
 import { getMemberName } from '../../../lib/getMemberName'
 import { withPageWrapper } from '../../../lib/pageWrapper'
-import { getEditMemberRoute, type ViewMemberRouteParams } from '../../../lib/routes'
+import { getEditMemberRoute, getViewMemberRoute } from '../../../lib/routes'
 import { trpc } from '../../../lib/trpc'
 import css from './index.module.scss'
 
 export const ViewMemberPage = withPageWrapper({
   authorizedOnly: true,
   useQuery: () => {
-    const { memberId } = useParams() as ViewMemberRouteParams
+    const { memberId } = getViewMemberRoute.useParams()
     return trpc.getMember.useQuery({
       id: memberId,
     })

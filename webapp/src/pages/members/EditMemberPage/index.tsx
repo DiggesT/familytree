@@ -1,6 +1,6 @@
 import { zUpdateMemberTrpcInput } from '@familytree/backend/src/router/members/updateMember/input'
 import { pick } from 'lodash'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { Alert } from '../../../components/Alert'
 import { Button } from '../../../components/Button'
 import { FormItems } from '../../../components/FormItems'
@@ -10,7 +10,7 @@ import { Select } from '../../../components/Select'
 import { Textarea } from '../../../components/Textarea'
 import { useForm } from '../../../lib/form'
 import { withPageWrapper } from '../../../lib/pageWrapper'
-import { getViewMemberRoute, type EditMemberRouteParams } from '../../../lib/routes'
+import { getEditMemberRoute, getViewMemberRoute } from '../../../lib/routes'
 import { trpc } from '../../../lib/trpc'
 
 const getChildrensOptions = ({ creator }: { creator: string }): JSX.Element[] => {
@@ -31,7 +31,7 @@ const getChildrensOptions = ({ creator }: { creator: string }): JSX.Element[] =>
 export const EditMemberPage = withPageWrapper({
   authorizedOnly: true,
   useQuery: () => {
-    const { memberId } = useParams() as EditMemberRouteParams
+    const { memberId } = getEditMemberRoute.useParams()
     return trpc.getMember.useQuery({
       id: memberId,
     })
