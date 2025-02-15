@@ -12,7 +12,13 @@ import { trpc } from '../../../lib/trpc'
 export const NewMemberPage = withPageWrapper({
   authorizedOnly: true,
   title: 'New Member',
-})(() => {
+  setProps: ({ getAuthorizedMe }) => ({
+    me: getAuthorizedMe(),
+  }),
+})(({ me }) => {
+  const { data: treeData } = trpc.getTree.useQuery({ creator: me.id })
+  const treeId = treeData?.tree?.id ? treeData.tree.id : '' // TODO: find better way to be confident in existing treeId
+
   const createMember = trpc.createMember.useMutation()
 
   const { formik, alertProps, buttonProps } = useForm({
@@ -22,31 +28,35 @@ export const NewMemberPage = withPageWrapper({
       middleName: '',
       text: '',
     },
-    validationSchema: zCreateMemberTrpcInput,
+    validationSchema: zCreateMemberTrpcInput.omit({ treeId: true }),
     successMessage: 'Member created!',
     showValidationAlert: true,
     onSubmit: async (values) => {
-      await createMember.mutateAsync(values)
+      await createMember.mutateAsync({ ...values, treeId })
     },
   })
 
   return (
     <Segment title="New Member">
-      <form
-        onSubmit={(e) => {
-          e.preventDefault()
-          formik.handleSubmit()
-        }}
-      >
-        <FormItems>
-          <Input name="lastName" label="Last Name" formik={formik} />
-          <Input name="firstName" label="First Name" formik={formik} />
-          <Input name="middleName" label="Middle Name" formik={formik} />
-          <Textarea name="text" label="Text" formik={formik} />
-          <Alert {...alertProps} />
-          <Button {...buttonProps}>Create Member</Button>
-        </FormItems>
-      </form>
+      {treeData?.tree === null ? (
+        <Alert color="brown">First you need to create a tree.</Alert>
+      ) : (
+        <form
+          onSubmit={(e) => {
+            e.preventDefault()
+            formik.handleSubmit()
+          }}
+        >
+          <FormItems>
+            <Input name="lastName" label="Last Name" formik={formik} />
+            <Input name="firstName" label="First Name" formik={formik} />
+            <Input name="middleName" label="Middle Name" formik={formik} />
+            <Textarea name="text" label="Text" formik={formik} />
+            <Alert {...alertProps} />
+            <Button {...buttonProps}>Create Member</Button>
+          </FormItems>
+        </form>
+      )}
     </Segment>
   )
 })

@@ -11,6 +11,7 @@ import { getMemberTrpcRoute } from './members/getMember'
 import { getMembersTrpcRoute } from './members/getMembers'
 import { updateMemberTrpcRoute } from './members/updateMember'
 import { createTreeTrpcRoute } from './tree/createTree'
+import { getTreeTrpcRoute } from './tree/getTree'
 // @endindex
 
 export const trpcRouter = trpc.router({
@@ -25,6 +26,7 @@ export const trpcRouter = trpc.router({
   getMembers: getMembersTrpcRoute,
   updateMember: updateMemberTrpcRoute,
   createTree: createTreeTrpcRoute,
+  getTree: getTreeTrpcRoute,
   // @endindex
 })
 

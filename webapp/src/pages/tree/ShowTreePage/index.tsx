@@ -10,12 +10,17 @@ export const ShowTreePage = withPageWrapper({
     me: getAuthorizedMe(),
   }),
 })(({ me }) => {
-  const { data } = trpc.getMembers.useQuery({ creator: me.id, limit: 100 }) // TODO: unlimited
+  const { data: memberData } = trpc.getMembers.useQuery({ creator: me.id, limit: 100 }) // TODO: unlimited
+  const { data: treeData } = trpc.getTree.useQuery({ creator: me.id })
 
   return (
-    <Segment title="Tree Name">
-      {data && data.members.length > 0 ? ( // TODO: add more show tree variants
-        <BinaryTree dataMembers={data.members}></BinaryTree>
+    // TODO: Should I do something with title treeData possibly undefined?
+    <Segment title={treeData?.tree ? treeData.tree.name : 'Tree not found'}>
+      {treeData?.tree === null ? (
+        <Alert color="brown">First you need to create a tree.</Alert>
+      ) : memberData && memberData.members.length > 0 ? (
+        // TODO: add more show tree variants
+        <BinaryTree dataMembers={memberData.members} />
       ) : (
         <Alert color="brown">There are no members to create a tree.</Alert>
       )}
