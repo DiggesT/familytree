@@ -1,5 +1,6 @@
 import cors from 'cors'
 import express from 'express'
+import { applyCron } from './lib/cron'
 import { type AppContext, createAppContext } from './lib/ctx'
 import { env } from './lib/env'
 import { applyPassportToExpressApp } from './lib/passport'
@@ -26,6 +27,8 @@ void (async () => {
     applyPassportToExpressApp(expressApp, ctx)
 
     await applyTrpcToExpressApp(expressApp, ctx, trpcRouter)
+
+    applyCron(ctx)
 
     expressApp.listen(env.PORT, () => {
       console.info(`Listening at http://localhost:${env.PORT}`)
