@@ -9,34 +9,54 @@ datasource db {
 }
 
 model User {
-  id          String           @id @default(uuid())
-  nick        String           @unique
-  email       String           @unique
-  name        String           @default("")
-  password    String
-  createdAt   DateTime         @default(now())
-  members     Member[]
-  trees       Tree[]
-  permissions UserPermission[]
+  id              String                @id @default(uuid())
+  nick            String                @unique
+  email           String                @unique
+  name            String                @default("")
+  password        String
+  createdAt       DateTime              @default(now())
+  members         Member[]
+  trees           Tree[]
+  userpermissions UserPermission[]
+  treepermissions UserTreePermissions[]
 }
 
 enum UserPermission {
   ALL
 }
 
+enum TreePermission {
+  OWNER
+  COAUTHOR
+  VIEWER
+}
+
 model Tree {
-  id        String   @id @default(uuid())
-  name      String
-  createdAt DateTime @default(now())
-  createdBy String
-  creator   User     @relation(fields: [createdBy], references: [id])
-  members   Member[]
+  id          String                @id @default(uuid())
+  name        String
+  createdAt   DateTime              @default(now())
+  createdBy   String
+  creator     User                  @relation(fields: [createdBy], references: [id])
+  members     Member[]
+  permissions UserTreePermissions[]
+}
+
+model UserTreePermissions {
+  id          String           @id @default(uuid())
+  createdAt   DateTime         @default(now())
+  userId      String
+  user        User             @relation(fields: [userId], references: [id])
+  treeId      String
+  tree        Tree             @relation(fields: [treeId], references: [id])
+  permissions TreePermission[]
+
+  @@unique([userId, treeId])
 }
 
 model Member {
   id           String   @id @default(uuid())
   serialNumber Int      @unique @default(autoincrement())
-  treeId       String   
+  treeId       String
   tree         Tree     @relation(fields: [treeId], references: [id])
   lastName     String
   firstName    String
