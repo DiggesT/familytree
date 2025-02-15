@@ -12,6 +12,8 @@ export const getEditProfileRoute = pgr(() => '/edit-profile')
 
 export const getShowTreeRoute = pgr(() => '/tree/show')
 
+export const getNewTreeRoute = pgr(() => '/tree/new')
+
 export const getNewMemberRoute = pgr(() => '/members/new')
 
 export const getViewMemberRoute = pgr({ memberId: true }, ({ memberId }) => `/members/${memberId}`)
