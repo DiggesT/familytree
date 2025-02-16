@@ -1,9 +1,10 @@
+import { zStringRequired } from '@familytree/shared/src/zod'
 import { z } from 'zod'
 import { zCreateMemberTrpcInput } from '../createMember/input'
 
 export const zUpdateMemberTrpcInput = zCreateMemberTrpcInput
   .extend({
-    memberId: z.string().min(1),
+    memberId: zStringRequired(),
     mother: z.string(),
     father: z.string(),
   })

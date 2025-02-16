@@ -1,6 +1,7 @@
+import { zStringRequired } from '@familytree/shared/src/zod'
 import { z } from 'zod'
 
 export const zSignInTrpcInput = z.object({
-  nick: z.string().min(1, 'Nick is required.'),
-  password: z.string().min(1, 'Password is required.'),
+  nick: zStringRequired('Nick is required.'),
+  password: zStringRequired('Password is required.'),
 })

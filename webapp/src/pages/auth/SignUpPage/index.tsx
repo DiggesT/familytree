@@ -1,6 +1,6 @@
 import { zSignUpTrpcInput } from '@familytree/backend/src/router/auth/signUp/input'
+import { zPasswordsMustBeTheSame, zStringRequired } from '@familytree/shared/src/zod'
 import Cookies from 'js-cookie'
-import { z } from 'zod'
 import { Alert } from '../../../components/Alert'
 import { Button } from '../../../components/Button'
 import { FormItems } from '../../../components/FormItems'
@@ -26,16 +26,8 @@ export const SignUpPage = withPageWrapper({
     },
     resetOnSuccess: false,
     validationSchema: zSignUpTrpcInput
-      .extend({ passwordAgain: z.string().min(1, 'Password Again is required.') })
-      .superRefine((val, ctx) => {
-        if (val.password !== val.passwordAgain) {
-          ctx.addIssue({
-            code: z.ZodIssueCode.custom,
-            message: 'Passwords must be the same.',
-            path: ['passwordAgain'],
-          })
-        }
-      }),
+      .extend({ passwordAgain: zStringRequired('Password Again is required.') })
+      .superRefine(zPasswordsMustBeTheSame('newPassword', 'newPasswordAgain')),
     onSubmit: async (values) => {
       const { token } = await signUp.mutateAsync(values)
       Cookies.set('token', token, { expires: 99999 })

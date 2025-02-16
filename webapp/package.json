@@ -14,6 +14,7 @@
   },
   "dependencies": {
     "@familytree/backend": "workspace:*",
+    "@familytree/shared": "workspace:*",
     "@tanstack/react-query": "4.x",
     "@trpc/client": "^10.45.2",
     "@trpc/react-query": "^10.45.2",

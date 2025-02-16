@@ -22,6 +22,7 @@
   },
   "dependencies": {
     "@familytree/webapp": "workspace:*",
+    "@familytree/shared": "workspace:*",
     "@prisma/client": "^6.2.1",
     "@trpc/server": "^10.45.2",
     "axios": "^1.7.9",
