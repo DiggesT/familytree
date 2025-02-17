@@ -1,8 +1,8 @@
 import { z } from 'zod'
-import { trpc } from '../../../lib/trpc'
+import { trpcLoggedProcedure } from '../../../lib/trpc'
 import { zGetMembersTrpcInput } from './input'
 
-export const getMembersTrpcRoute = trpc.procedure
+export const getMembersTrpcRoute = trpcLoggedProcedure
   .input(zGetMembersTrpcInput.extend({ orderCreatedAt: z.enum(['asc', 'desc']).optional().default('asc') }))
   .query(async ({ ctx, input }) => {
     const normalizedSearch = input.search ? input.search.trim().replace(/[\s\n\t]/g, '&') : undefined

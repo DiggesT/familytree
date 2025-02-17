@@ -1,7 +1,7 @@
-import { trpc } from '../../../lib/trpc'
+import { trpcLoggedProcedure } from '../../../lib/trpc'
 import { zCreateTreeTrpcInput } from './input'
 
-export const createTreeTrpcRoute = trpc.procedure.input(zCreateTreeTrpcInput).mutation(async ({ input, ctx }) => {
+export const createTreeTrpcRoute = trpcLoggedProcedure.input(zCreateTreeTrpcInput).mutation(async ({ input, ctx }) => {
   if (!ctx.me) {
     throw Error('Unauthorized (zCreateTreeTrpcInput).')
   }
