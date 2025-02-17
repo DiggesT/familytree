@@ -3,6 +3,7 @@ import express from 'express'
 import { applyCron } from './lib/cron'
 import { type AppContext, createAppContext } from './lib/ctx'
 import { env } from './lib/env'
+import { logger } from './lib/logger'
 import { applyPassportToExpressApp } from './lib/passport'
 import { applyTrpcToExpressApp } from './lib/trpc'
 import { trpcRouter } from './router'
@@ -31,10 +32,10 @@ void (async () => {
     applyCron(ctx)
 
     expressApp.listen(env.PORT, () => {
-      console.info(`Listening at http://localhost:${env.PORT}`)
+      logger.info(`Listening at http://localhost:${env.PORT}`)
     })
   } catch (error) {
-    console.error(error)
+    logger.error(error)
     await ctx?.stop()
   }
 })()
