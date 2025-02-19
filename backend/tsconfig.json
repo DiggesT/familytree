@@ -6,7 +6,8 @@
   "compilerOptions": {
     "plugins": [{ "transform": "typescript-transform-paths" }],
     "paths": {
-      "@familytree/webapp/*": ["../webapp/*"]
+      "@familytree/webapp/*": ["../webapp/*"],
+      "@familytree/shared/*": ["../shared/*"]
     },
     "outDir": "./dist",
     "allowJs": true,
