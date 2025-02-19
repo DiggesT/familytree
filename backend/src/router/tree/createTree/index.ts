@@ -1,3 +1,4 @@
+import { ExpectedError } from '../../../lib/error'
 import { trpcLoggedProcedure } from '../../../lib/trpc'
 import { zCreateTreeTrpcInput } from './input'
 
@@ -13,7 +14,7 @@ export const createTreeTrpcRoute = trpcLoggedProcedure.input(zCreateTreeTrpcInpu
     },
   })
   if (createdTree) {
-    throw new Error(`You already have a tree: "${createdTree.name}"`)
+    throw new ExpectedError(`You already have a tree: "${createdTree.name}"`)
   }
 
   const newTree = await ctx.prisma.tree.create({ data: { ...input, createdBy: ctx.me.id } })
