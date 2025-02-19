@@ -1,6 +1,6 @@
 import type { TrpcRouter } from '@familytree/backend/src/router'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import { createTRPCReact, httpBatchLink } from '@trpc/react-query'
+import { createTRPCReact, httpBatchLink, loggerLink } from '@trpc/react-query'
 import Cookies from 'js-cookie'
 import superjson from 'superjson'
 import { env } from './env'
@@ -19,6 +19,9 @@ const queryClient = new QueryClient({
 const trpcClient = trpc.createClient({
   transformer: superjson,
   links: [
+    loggerLink({
+      enabled: () => env.NODE_ENV === 'development',
+    }),
     httpBatchLink({
       url: env.VITE_BACKEND_TRPC_URL,
       headers: () => {
