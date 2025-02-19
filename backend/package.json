@@ -10,6 +10,9 @@
     "watch-emails": "mjml -w ./src/emails/[!_]*.mjml -o ./src/emails/dist",
     "copy-emails": "copyfiles ./src/emails/dist/*.html ./dist/backend",
     "start": "node ./dist/backend/src/index.js",
+    "sentry": "pnpm sentry-release && pnpm sentry-sourcemaps",
+    "sentry-release": "dotenv -- bash -c 'sentry-cli releases new ${SOURCE_VERSION} --finalize --org family-tree-l5 --project backend --auth-token ${SENTRY_AUTH_TOKEN}'",
+    "sentry-sourcemaps": "dotenv -- bash -c 'sentry-cli releases files ${SOURCE_VERSION} upload-sourcemaps ./dist --org family-tree-l5 --project backend'",
     "pmd": "prisma migrate dev",
     "pgc": "prisma generate",
     "types": "tsc --noEmit --project ./tsconfig.json",
@@ -50,6 +53,7 @@
     "zod": "^3.24.1"
   },
   "devDependencies": {
+    "@sentry/cli": "^2.42.1",
     "@types/cors": "^2.8.17",
     "@types/cron": "^2.4.3",
     "@types/debug": "^4.1.12",
@@ -60,6 +64,7 @@
     "@types/passport": "^1.0.17",
     "@types/passport-jwt": "^4.0.1",
     "@types/triple-beam": "^1.3.5",
+    "dotenv-cli": "^8.0.0",
     "eslint-plugin-node": "^11.1.0",
     "prisma": "^6.2.1"
   }
