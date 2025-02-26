@@ -1,3 +1,4 @@
+import { getAvatarUrl } from '@familytree/shared/src/cloudinary'
 import { format } from 'date-fns'
 import { LinkButton } from '../../../components/Button'
 import { Segment } from '../../../components/Segment'
@@ -26,7 +27,13 @@ export const ViewMemberPage = withPageWrapper({
     <Segment title={`${member.lastName} ${member.firstName} ${member.middleName}`}>
       <div className={css.createdAt}>Created At: {format(member.createdAt, 'yyyy-MM-dd')}</div>
       <div className={css.createdBy}>
-        Created By: {member.creator.nick} {member.creator.name ? `(${member.creator.name})` : ''}
+        <img className={css.avatar} alt="" src={getAvatarUrl(member.creator.avatar, 'small')} />
+        <div className={css.name}>
+          Created By:
+          <br />
+          {member.creator.nick}
+          {member.creator.name ? `(${member.creator.name})` : ''}
+        </div>
       </div>
       <div className={css.parents}>
         Mother: {member.mother ? getMemberName(member.mother) || 'Not found.' : 'Empty.'}

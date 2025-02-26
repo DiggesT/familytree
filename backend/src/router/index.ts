@@ -12,6 +12,7 @@ import { getMembersTrpcRoute } from './members/getMembers'
 import { updateMemberTrpcRoute } from './members/updateMember'
 import { createTreeTrpcRoute } from './tree/createTree'
 import { getTreeTrpcRoute } from './tree/getTree'
+import { prepareCloudinaryUploadTrpcRoute } from './upload/prepareCloudinaryUpload'
 // @endindex
 
 export const trpcRouter = createTrpcRouter({
@@ -27,6 +28,7 @@ export const trpcRouter = createTrpcRouter({
   updateMember: updateMemberTrpcRoute,
   createTree: createTreeTrpcRoute,
   getTree: getTreeTrpcRoute,
+  prepareCloudinaryUpload: prepareCloudinaryUploadTrpcRoute,
   // @endindex
 })
 

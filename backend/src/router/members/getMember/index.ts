@@ -12,6 +12,7 @@ export const getMemberTrpcRoute = trpcLoggedProcedure.input(zGetMemberTrpcInput)
           id: true,
           nick: true,
           name: true,
+          avatar: true,
         },
       },
     },
