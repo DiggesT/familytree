@@ -7,4 +7,5 @@ export const zCreateMemberTrpcInput = z.object({
   firstName: zStringRequired('First Name is required.'),
   middleName: z.string(),
   text: z.string(),
+  images: z.array(zStringRequired()),
 })

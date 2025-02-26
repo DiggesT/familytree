@@ -8,6 +8,7 @@ import { Input } from '../../../components/Input'
 import { Segment } from '../../../components/Segment'
 import { Select } from '../../../components/Select'
 import { Textarea } from '../../../components/Textarea'
+import { UploadsToCloudinary } from '../../../components/UploadsToCloudinary'
 import { useForm } from '../../../lib/form'
 import { withPageWrapper } from '../../../lib/pageWrapper'
 import { getEditMemberRoute, getViewMemberRoute } from '../../../lib/routes'
@@ -47,7 +48,7 @@ export const EditMemberPage = withPageWrapper({
   const updateMember = trpc.updateMember.useMutation()
 
   const { formik, alertProps, buttonProps } = useForm({
-    initialValues: pick(member, ['id', 'lastName', 'firstName', 'middleName', 'text', 'mother', 'father']), // TODO: pick M and F
+    initialValues: pick(member, ['id', 'lastName', 'firstName', 'middleName', 'text', 'mother', 'father', 'images']),
     validationSchema: zUpdateMemberTrpcInput.omit({ memberId: true }),
     resetOnSuccess: false,
     showValidationAlert: true,
@@ -84,6 +85,7 @@ export const EditMemberPage = withPageWrapper({
             defaultValue={member.father} // TODO: same as mother select
           />
           <Textarea name="text" label="Text" formik={formik} />
+          <UploadsToCloudinary label="Images" name="images" type="image" preset="preview" formik={formik} />
           <Alert {...alertProps} />
           <Button {...buttonProps}>Update Member</Button>
         </FormItems>

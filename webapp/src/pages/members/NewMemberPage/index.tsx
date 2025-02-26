@@ -5,6 +5,7 @@ import { FormItems } from '../../../components/FormItems'
 import { Input } from '../../../components/Input'
 import { Segment } from '../../../components/Segment'
 import { Textarea } from '../../../components/Textarea'
+import { UploadsToCloudinary } from '../../../components/UploadsToCloudinary'
 import { useForm } from '../../../lib/form'
 import { withPageWrapper } from '../../../lib/pageWrapper'
 import { trpc } from '../../../lib/trpc'
@@ -27,6 +28,7 @@ export const NewMemberPage = withPageWrapper({
       firstName: '',
       middleName: '',
       text: '',
+      images: [],
     },
     validationSchema: zCreateMemberTrpcInput.omit({ treeId: true }),
     successMessage: 'Member created!',
@@ -52,6 +54,7 @@ export const NewMemberPage = withPageWrapper({
             <Input name="firstName" label="First Name" formik={formik} />
             <Input name="middleName" label="Middle Name" formik={formik} />
             <Textarea name="text" label="Text" formik={formik} />
+            <UploadsToCloudinary label="Images" name="images" type="image" preset="preview" formik={formik} />
             <Alert {...alertProps} />
             <Button {...buttonProps}>Create Member</Button>
           </FormItems>

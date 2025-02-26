@@ -1,5 +1,6 @@
-import { getAvatarUrl } from '@familytree/shared/src/cloudinary'
+import { getAvatarUrl, getCloudinaryUploadUrl } from '@familytree/shared/src/cloudinary'
 import { format } from 'date-fns'
+import ImageGallery from 'react-image-gallery'
 import { LinkButton } from '../../../components/Button'
 import { Segment } from '../../../components/Segment'
 import { getMemberName } from '../../../lib/getMemberName'
@@ -41,6 +42,18 @@ export const ViewMemberPage = withPageWrapper({
       <div className={css.parents}>
         Father: {member.father ? getMemberName(member.father) || 'Not found.' : 'Empty.'}
       </div>
+      {!!member.images.length && (
+        <div className={css.gallery}>
+          <ImageGallery
+            showPlayButton={false}
+            showFullscreenButton={false}
+            items={member.images.map((image) => ({
+              original: getCloudinaryUploadUrl(image, 'image', 'large'),
+              thumbnail: getCloudinaryUploadUrl(image, 'image', 'preview'),
+            }))}
+          />
+        </div>
+      )}
       <div className={css.text} dangerouslySetInnerHTML={{ __html: member.text }} />
       {me?.id === member.createdBy && (
         <div className={css.editButton}>

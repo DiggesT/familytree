@@ -63,6 +63,7 @@ model Member {
   firstName    String
   middleName   String
   text         String
+  images       String[]
   mother       String
   father       String
   createdAt    DateTime @default(now())
