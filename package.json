@@ -5,6 +5,7 @@
   "scripts": {
     "b": "pnpm --filter @familytree/backend",
     "w": "pnpm --filter @familytree/webapp",
+    "sh": "pnpm --filter @familytree/shared",
     "dev": "pnpm -r --parallel dev",
     "types": "concurrently 'pnpm b types' 'pnpm w types'",
     "lint": "concurrently 'pnpm b lint' 'pnpm w lint'",

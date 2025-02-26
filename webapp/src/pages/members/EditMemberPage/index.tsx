@@ -1,5 +1,5 @@
 import { zUpdateMemberTrpcInput } from '@familytree/backend/src/router/members/updateMember/input'
-import { pick } from 'lodash'
+import { pick } from '@familytree/shared/src/pick'
 import { useNavigate } from 'react-router-dom'
 import { Alert } from '../../../components/Alert'
 import { Button } from '../../../components/Button'
