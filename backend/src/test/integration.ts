@@ -1,6 +1,11 @@
+import '../lib/sentry.mock'
+import '../lib/emails/utils.mock'
+import '../lib/brevo.mock'
+
 import { type Member, type User } from '@prisma/client'
 import _ from 'lodash'
 import { createAppContext } from '../lib/ctx'
+import { sendWelcomeEmail } from '../lib/emails'
 import { env } from '../lib/env'
 import { createTrpcCallerFactory, getTrpcContext } from '../lib/trpc'
 import { trpcRouter } from '../router'
@@ -33,7 +38,7 @@ export const withoutNoize = (input: any): any => {
   return deepMap(input, ({ value }) => {
     if (_.isObject(value) && !_.isArray(value)) {
       return _.entries(value).reduce((acc, [objectKey, objectValue]: [string, any]) => {
-        if ([/^id$/, /Id$/, /At$/].some((regex) => regex.test(objectKey))) {
+        if ([/^id$/, /Id$/, /At$/, /^url$/].some((regex) => regex.test(objectKey))) {
           return acc
         }
         return {
@@ -47,7 +52,7 @@ export const withoutNoize = (input: any): any => {
 }
 
 export const createUser = async ({ user = {}, number = 1 }: { user?: Partial<User>; number?: number } = {}) => {
-  return await appContext.prisma.user.create({
+  const createdUser = await appContext.prisma.user.create({
     data: {
       nick: `user${number}`,
       email: `user${number}@example.com`,
@@ -55,6 +60,8 @@ export const createUser = async ({ user = {}, number = 1 }: { user?: Partial<Use
       ..._.omit(user, ['password']),
     },
   })
+  await sendWelcomeEmail({ user: createdUser })
+  return createdUser
 }
 
 export const createMember = async ({
