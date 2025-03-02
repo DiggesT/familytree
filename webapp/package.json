@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
-    "test": "jest",
+    "test": "dotenv -e .env.test -e .env jest",
     "preview": "vite preview",
     "types": "tsc --noEmit --project ./tsconfig.app.json && tsc --noEmit --project ./tsconfig.node.json",
     "lint": "eslint --cache --cache-location ./node_modules/.cache/.eslintcache --ext .ts,.tsx .",
@@ -24,6 +24,8 @@
     "@trpc/server": "^10.45.2",
     "classnames": "^2.5.1",
     "date-fns": "^4.1.0",
+    "dotenv": "^16.4.7",
+    "dotenv-cli": "^8.0.0",
     "formik": "^2.4.6",
     "formik-validator-zod": "^2.0.1",
     "include-media": "^2.0.0",
