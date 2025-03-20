@@ -30,6 +30,7 @@ enum TreePermission {
   OWNER
   COAUTHOR
   VIEWER
+  INVITED
 }
 
 model Tree {
