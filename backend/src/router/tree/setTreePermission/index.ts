@@ -27,6 +27,21 @@ export const setTreePermissionTrpcRoute = trpcLoggedProcedure
       throw new ExpectedError(`User doesn't exist.`)
     }
 
+    if (input.permission === 'INVITED') {
+      const invited = ctx.prisma.userTreePermissions.findUnique({
+        where: {
+          userId_treeId: {
+            userId: input.userId,
+            treeId: input.treeId,
+          },
+          permissions: { has: input.permission },
+        },
+      })
+      if (invited !== null) {
+        throw new ExpectedError(`User has already been invited.`)
+      }
+    }
+
     await ctx.prisma.userTreePermissions.create({
       data: { userId: input.userId, treeId: input.treeId, permissions: [input.permission] },
     })

@@ -14,6 +14,8 @@ import { createTreeTrpcRoute } from './tree/createTree'
 import { getTreeTrpcRoute } from './tree/getTree'
 import { setTreePermissionTrpcRoute } from './tree/setTreePermission'
 import { prepareCloudinaryUploadTrpcRoute } from './upload/prepareCloudinaryUpload'
+import { getUserByNickTrpcRoute } from './user/getUserByNick'
+import { getUsersTrpcRoute } from './user/getUsers'
 // @endindex
 
 export const trpcRouter = createTrpcRouter({
@@ -31,6 +33,8 @@ export const trpcRouter = createTrpcRouter({
   getTree: getTreeTrpcRoute,
   setTreePermission: setTreePermissionTrpcRoute,
   prepareCloudinaryUpload: prepareCloudinaryUploadTrpcRoute,
+  getUserByNick: getUserByNickTrpcRoute,
+  getUsers: getUsersTrpcRoute,
   // @endindex
 })
 
