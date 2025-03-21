@@ -4,7 +4,7 @@ import { zGetUserByNickTrpcInput } from './input'
 
 export const getUserByNickTrpcRoute = trpcLoggedProcedure
   .input(zGetUserByNickTrpcInput)
-  .query(async ({ ctx, input }) => {
+  .mutation(async ({ ctx, input }) => {
     const user = await ctx.prisma.user.findUnique({
       select: {
         id: true,

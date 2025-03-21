@@ -1,4 +1,5 @@
 import { zCreateTreeTrpcInput } from '@familytree/backend/src/router/tree/createTree/input'
+import { z } from 'zod'
 import { Alert } from '../../../components/Alert'
 import { Button } from '../../../components/Button'
 import { FormItems } from '../../../components/FormItems'
@@ -38,8 +39,37 @@ const CreateNewTree = () => {
   )
 }
 
-const InviteToTree = () => {
-  return <Segment title={'Invite to Tree'} />
+const InviteToTree = ({ treeId }: { treeId: string }) => {
+  const InviteToTree = trpc.setTreePermission.useMutation()
+  const getUserByNick = trpc.getUserByNick.useMutation()
+
+  const { formik, alertProps, buttonProps } = useForm({
+    initialValues: { userNick: '' },
+    validationSchema: z.object({ userNick: z.string().min(1, 'User nick is required.') }),
+    successMessage: 'Invitation sent!',
+    onSubmit: async (values) => {
+      // TODO: is this ok to use mutate?
+      const user = await getUserByNick.mutateAsync({ nick: values.userNick })
+      await InviteToTree.mutateAsync({ userId: user.id, treeId, permission: 'INVITED' })
+    },
+  })
+
+  return (
+    <Segment title={'Invite to Tree'} size={2}>
+      <form
+        onSubmit={(e) => {
+          e.preventDefault()
+          formik.handleSubmit()
+        }}
+      >
+        <FormItems>
+          <Input name="userNick" label="User Nick" formik={formik} />
+          <Alert {...alertProps} />
+          <Button {...buttonProps}>Invite</Button>
+        </FormItems>
+      </form>
+    </Segment>
+  )
 }
 
 export const TreeManager = withPageWrapper({
@@ -57,8 +87,12 @@ export const TreeManager = withPageWrapper({
       ) : (
         <CreateNewTree />
       )}
-      <InviteToTree />
-      <Segment title={'Invitings'}></Segment>
+      {treeData?.tree?.id ? (
+        <InviteToTree treeId={treeData.tree.id} />
+      ) : (
+        <Segment title={'Invite to Tree'} size={2} description="First you need to create a tree." />
+      )}
+      <Segment title={'Invitings'} size={2}></Segment>
     </Segment>
   )
 })
