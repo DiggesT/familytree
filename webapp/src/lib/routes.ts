@@ -12,7 +12,7 @@ export const getEditProfileRoute = pgr(() => '/edit-profile')
 
 export const getShowTreeRoute = pgr(() => '/tree/show')
 
-export const getNewTreeRoute = pgr(() => '/tree/new')
+export const getTreeManagerRoute = pgr(() => '/tree/manager')
 
 export const getNewMemberRoute = pgr(() => '/members/new')
 

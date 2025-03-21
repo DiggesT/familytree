@@ -8,7 +8,7 @@ import { useForm } from '../../../lib/form'
 import { withPageWrapper } from '../../../lib/pageWrapper'
 import { trpc } from '../../../lib/trpc'
 
-export const NewTreePage = withPageWrapper({ title: 'New Tree' })(() => {
+const CreateNewTree = () => {
   const createTree = trpc.createTree.useMutation()
 
   const { formik, alertProps, buttonProps } = useForm({
@@ -21,7 +21,7 @@ export const NewTreePage = withPageWrapper({ title: 'New Tree' })(() => {
   })
 
   return (
-    <Segment title={'New Tree'}>
+    <Segment title={'Create New Tree'} size={2}>
       <form
         onSubmit={(e) => {
           e.preventDefault()
@@ -34,6 +34,31 @@ export const NewTreePage = withPageWrapper({ title: 'New Tree' })(() => {
           <Button {...buttonProps}>Create</Button>
         </FormItems>
       </form>
+    </Segment>
+  )
+}
+
+const InviteToTree = () => {
+  return <Segment title={'Invite to Tree'} />
+}
+
+export const TreeManager = withPageWrapper({
+  title: 'New Tree',
+  setProps: ({ getAuthorizedMe }) => ({
+    me: getAuthorizedMe(),
+  }),
+})(({ me }) => {
+  const { data: treeData } = trpc.getTree.useQuery({ creator: me.id })
+
+  return (
+    <Segment title={'Tree Manager'}>
+      {treeData?.tree ? (
+        <Segment title={treeData.tree?.name} size={2} description="This is your family tree name." />
+      ) : (
+        <CreateNewTree />
+      )}
+      <InviteToTree />
+      <Segment title={'Invitings'}></Segment>
     </Segment>
   )
 })

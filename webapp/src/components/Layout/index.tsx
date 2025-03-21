@@ -23,8 +23,8 @@ export const Layout = () => {
                 </Link>
               </li>
               <li className={css.item}>
-                <Link className={css.link} to={routes.getNewTreeRoute.definition}>
-                  New Tree
+                <Link className={css.link} to={routes.getTreeManagerRoute.definition}>
+                  Tree Manager
                 </Link>
               </li>
               <li className={css.item}>

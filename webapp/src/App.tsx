@@ -16,8 +16,8 @@ import { EditMemberPage } from './pages/members/EditMemberPage'
 import { NewMemberPage } from './pages/members/NewMemberPage/'
 import { ViewMemberPage } from './pages/members/ViewMemberPage'
 import { NotFoundPage } from './pages/other/NotFoundPage'
-import { NewTreePage } from './pages/tree/NewTreePage'
 import { ShowTreePage } from './pages/tree/ShowTreePage'
+import { TreeManager } from './pages/tree/TreeManager'
 import './styles/global.scss'
 
 export const App = () => {
@@ -35,7 +35,7 @@ export const App = () => {
                 <Route path={routes.getSignUpRoute.definition} element={<SignUpPage />} />
                 <Route path={routes.getSignInRoute.definition} element={<SignInPage />} />
                 <Route path={routes.getShowTreeRoute.definition} element={<ShowTreePage />} />
-                <Route path={routes.getNewTreeRoute.definition} element={<NewTreePage />} />
+                <Route path={routes.getTreeManagerRoute.definition} element={<TreeManager />} />
                 <Route path={routes.getAllMembersRoute.definition} element={<AllMembersPage />} />
                 <Route path={routes.getNewMemberRoute.definition} element={<NewMemberPage />} />
                 <Route path={routes.getEditProfileRoute.definition} element={<EditProfilePage />} />
