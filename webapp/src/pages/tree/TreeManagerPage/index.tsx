@@ -8,6 +8,7 @@ import { Segment } from '../../../components/Segment'
 import { useForm } from '../../../lib/form'
 import { withPageWrapper } from '../../../lib/pageWrapper'
 import { trpc } from '../../../lib/trpc'
+import css from './index.module.scss'
 
 const CreateNewTree = () => {
   const createTree = trpc.createTree.useMutation()
@@ -72,7 +73,25 @@ const InviteToTree = ({ treeId }: { treeId: string }) => {
   )
 }
 
-export const TreeManager = withPageWrapper({
+const Invitings = ({ userId }: { userId: string }) => {
+  const { data: userTreePermissions } = trpc.getTreeByPermission.useQuery({ userId, permission: 'INVITED' })
+  const invites =
+    userTreePermissions && userTreePermissions?.userTreePermissions.length > 0 ? (
+      <Segment title={'Invitings'} size={2}>
+        {userTreePermissions.userTreePermissions.map((value) => (
+          <span className={css.text} key={value.id}>
+            User: {value.tree.creator.nick} invites you to his family tree: {value.tree.name}.
+          </span>
+        ))}
+      </Segment>
+    ) : (
+      <Segment title={'Invitings'} size={2} description="There is no invitings yet." />
+    )
+
+  return invites
+}
+
+export const TreeManagerPage = withPageWrapper({
   title: 'New Tree',
   setProps: ({ getAuthorizedMe }) => ({
     me: getAuthorizedMe(),
@@ -92,7 +111,7 @@ export const TreeManager = withPageWrapper({
       ) : (
         <Segment title={'Invite to Tree'} size={2} description="First you need to create a tree." />
       )}
-      <Segment title={'Invitings'} size={2}></Segment>
+      <Invitings userId={me.id} />
     </Segment>
   )
 })

@@ -18,6 +18,8 @@ export const zNickRequired = zStringRequired('Nick is required.').regex(
   'Nick may contain only lowercase letters, numbers and dashes.'
 )
 
+export const zEnumPermissions = (message: string) => z.enum(['OWNER', 'COAUTHOR', 'VIEWER', 'INVITED'], { message })
+
 export const zPasswordsMustBeTheSame =
   (passwordFieldName: string, passwordAgainFieldName: string) => (val: any, ctx: z.RefinementCtx) => {
     if (val[passwordFieldName] !== val[passwordAgainFieldName]) {
