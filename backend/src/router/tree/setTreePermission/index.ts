@@ -28,7 +28,7 @@ export const setTreePermissionTrpcRoute = trpcLoggedProcedure
     }
 
     if (input.permission === 'INVITED') {
-      const invited = ctx.prisma.userTreePermissions.findUnique({
+      const invited = await ctx.prisma.userTreePermissions.findUnique({
         where: {
           userId_treeId: {
             userId: input.userId,
@@ -42,8 +42,17 @@ export const setTreePermissionTrpcRoute = trpcLoggedProcedure
       }
     }
 
-    await ctx.prisma.userTreePermissions.create({
-      data: { userId: input.userId, treeId: input.treeId, permissions: [input.permission] },
+    await ctx.prisma.userTreePermissions.upsert({
+      where: {
+        userId_treeId: {
+          userId: input.userId,
+          treeId: input.treeId,
+        },
+      },
+      update: {
+        permissions: [input.permission],
+      },
+      create: { userId: input.userId, treeId: input.treeId, permissions: [input.permission] },
     })
     return true
   })
