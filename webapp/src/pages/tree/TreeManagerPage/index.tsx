@@ -41,7 +41,7 @@ const CreateNewTree = () => {
 }
 
 const InviteToTree = ({ treeId }: { treeId: string }) => {
-  const InviteToTree = trpc.setTreePermission.useMutation()
+  const inviteToTree = trpc.setTreePermission.useMutation()
   const getUserByNick = trpc.getUserByNick.useMutation()
 
   const { formik, alertProps, buttonProps } = useForm({
@@ -51,7 +51,7 @@ const InviteToTree = ({ treeId }: { treeId: string }) => {
     onSubmit: async (values) => {
       // TODO: is this ok to use mutate?
       const user = await getUserByNick.mutateAsync({ nick: values.userNick })
-      await InviteToTree.mutateAsync({ userId: user.id, treeId, permission: 'INVITED' })
+      await inviteToTree.mutateAsync({ userId: user.id, treeId, permission: 'INVITED' })
     },
   })
 
@@ -74,14 +74,32 @@ const InviteToTree = ({ treeId }: { treeId: string }) => {
 }
 
 const Invitings = ({ userId }: { userId: string }) => {
+  const trpcUtils = trpc.useUtils()
   const { data: userTreePermissions } = trpc.getTreeByPermission.useQuery({ userId, permission: 'INVITED' })
+  const acceptInviteToTree = trpc.setTreePermission.useMutation()
+
+  const acceptInvite = async (treeId: string) => {
+    await acceptInviteToTree.mutateAsync({ userId, treeId, permission: 'VIEWER' })
+    void trpcUtils.invalidate()
+  }
+
   const invites =
     userTreePermissions && userTreePermissions?.userTreePermissions.length > 0 ? (
       <Segment title={'Invitings'} size={2}>
         {userTreePermissions.userTreePermissions.map((value) => (
-          <span className={css.text} key={value.id}>
-            User: {value.tree.creator.nick} invites you to his family tree: {value.tree.name}.
-          </span>
+          <div key={value.id}>
+            <span className={css.text}>
+              User: {value.tree.creator.nick} invites you to his family tree: {value.tree.name}.
+            </span>
+            <Button
+              color="green"
+              onClick={() => {
+                void acceptInvite(value.treeId)
+              }}
+            >
+              Accept
+            </Button>
+          </div>
         ))}
       </Segment>
     ) : (
