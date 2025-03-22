@@ -25,6 +25,8 @@ export const setTreePermissionTrpcRoute = trpcLoggedProcedure
     })
     if (!user) {
       throw new ExpectedError(`User doesn't exist.`)
+    } else if (user.nick === ctx.me.nick) {
+      throw new ExpectedError(`You cannot send invite to yourself.`)
     }
 
     if (input.permission === 'INVITED') {
@@ -34,7 +36,6 @@ export const setTreePermissionTrpcRoute = trpcLoggedProcedure
             userId: input.userId,
             treeId: input.treeId,
           },
-          permissions: { has: input.permission },
         },
       })
       if (invited !== null) {
