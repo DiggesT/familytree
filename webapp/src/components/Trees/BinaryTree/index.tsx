@@ -32,6 +32,7 @@ export const BinaryTree = ({ dataMembers }: { dataMembers: TrpcRouterOutput['get
     </option>
   ))
 
+  // TODO: refresh membersWithLevel
   const membersWithLevel = groupMembersByLevel(setMemberLevel(currentMember, members, 0), 0)
 
   const maxLevel = membersWithLevel.length
@@ -76,7 +77,7 @@ export const BinaryTree = ({ dataMembers }: { dataMembers: TrpcRouterOutput['get
 
   return (
     <>
-      <div>
+      <div className={css.select}>
         <Select
           name="members"
           label="Select member"

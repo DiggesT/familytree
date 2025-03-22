@@ -3,5 +3,5 @@ import { z } from 'zod'
 
 export const zGetTreeByPermissionTrpcInput = z.object({
   userId: zStringRequired('User Id is required.'),
-  permission: zEnumPermissions('Permission is required.'),
+  permissions: zEnumPermissions('Permission is required.').array(),
 })

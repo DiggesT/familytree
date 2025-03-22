@@ -7,7 +7,7 @@ export const getTreeByPermissionTrpcRoute = trpcLoggedProcedure
     const userTreePermissions = await ctx.prisma.userTreePermissions.findMany({
       where: {
         userId: input.userId,
-        permissions: { has: input.permission },
+        permissions: { hasSome: input.permissions },
       },
       include: {
         tree: {
@@ -22,10 +22,11 @@ export const getTreeByPermissionTrpcRoute = trpcLoggedProcedure
         },
         user: {
           select: {
+            id: true,
             nick: true,
           },
         },
       },
     })
-    return { userTreePermissions }
+    return userTreePermissions
   })

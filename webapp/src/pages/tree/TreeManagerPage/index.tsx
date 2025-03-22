@@ -75,7 +75,7 @@ const InviteToTree = ({ treeId }: { treeId: string }) => {
 
 const Invitings = ({ userId }: { userId: string }) => {
   const trpcUtils = trpc.useUtils()
-  const { data: userTreePermissions } = trpc.getTreeByPermission.useQuery({ userId, permission: 'INVITED' })
+  const { data: userTreePermissions } = trpc.getTreeByPermission.useQuery({ userId, permissions: ['INVITED'] })
   const acceptInviteToTree = trpc.setTreePermission.useMutation()
 
   const acceptInvite = async (treeId: string) => {
@@ -84,9 +84,9 @@ const Invitings = ({ userId }: { userId: string }) => {
   }
 
   const invites =
-    userTreePermissions && userTreePermissions?.userTreePermissions.length > 0 ? (
+    userTreePermissions && userTreePermissions?.length > 0 ? (
       <Segment title={'Invitings'} size={2}>
-        {userTreePermissions.userTreePermissions.map((value) => (
+        {userTreePermissions.map((value) => (
           <div key={value.id}>
             <span className={css.text}>
               User: {value.tree.creator.nick} invites you to his family tree: {value.tree.name}.
