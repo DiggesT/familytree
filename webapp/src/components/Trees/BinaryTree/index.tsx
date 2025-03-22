@@ -1,7 +1,9 @@
 import { type TrpcRouterOutput } from '@familytree/backend/src/router'
 import { useState } from 'react'
+import { Select } from '../../../components/Select'
 import { TreeMemberIcon } from '../SVG/TreeMemberIcon'
 import { groupMembersByLevel, setMemberLevel } from '../setMemberLevel/setMemberLevel'
+import css from './index.module.scss'
 
 export const BinaryTree = ({ dataMembers }: { dataMembers: TrpcRouterOutput['getMembers']['members'] }) => {
   const [currentMember, setCurrenMember] = useState<{ id: string; mother: string; father: string; name: string }>({
@@ -75,21 +77,21 @@ export const BinaryTree = ({ dataMembers }: { dataMembers: TrpcRouterOutput['get
   return (
     <>
       <div>
-        {/* TODO: add styles for select */}
-        <p>Select member:</p>
-        <select
+        <Select
+          name="members"
+          label="Select member"
+          disabled={false}
+          options={memberOptions}
           defaultValue={currentMember.id}
           onChange={(e) => {
             e.preventDefault()
             const selectedMember = members.find((member) => member.id === e.target.value)
             selectedMember && setCurrenMember(selectedMember)
           }}
-        >
-          {memberOptions}
-        </select>
+        />
       </div>
       <div>
-        <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width={width} height={height}>
+        <svg className={css.tree} xmlns="http://www.w3.org/2000/svg" version="1.1" width={width} height={height}>
           {tree}
           {branches}
         </svg>

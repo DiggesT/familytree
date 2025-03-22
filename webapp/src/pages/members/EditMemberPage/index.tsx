@@ -73,16 +73,22 @@ export const EditMemberPage = withPageWrapper({
           <Select
             name="mother"
             label="Mother"
-            formik={formik}
+            disabled={formik.isSubmitting}
             options={getChildrensOptions({ creator: member.creator.id })} // TODO: is it correct to use member.creator, instead of me.id?
             defaultValue={member.mother} // TODO: maybe it's possible to use formik
+            onChange={(e) => {
+              void formik.setFieldValue('mother', e.target.value) // TODO: use select 'name' parameter
+            }}
           />
           <Select
             name="father"
             label="Father"
-            formik={formik}
+            disabled={formik.isSubmitting}
             options={getChildrensOptions({ creator: member.creator.id })} // TODO: same as mother select
             defaultValue={member.father} // TODO: same as mother select
+            onChange={(e) => {
+              void formik.setFieldValue('father', e.target.value) // TODO: same as mother select
+            }}
           />
           <Textarea name="text" label="Text" formik={formik} />
           <UploadsToCloudinary label="Images" name="images" type="image" preset="preview" formik={formik} />
