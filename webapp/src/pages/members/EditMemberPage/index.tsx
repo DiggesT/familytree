@@ -14,8 +14,8 @@ import { withPageWrapper } from '../../../lib/pageWrapper'
 import { getEditMemberRoute, getViewMemberRoute } from '../../../lib/routes'
 import { trpc } from '../../../lib/trpc'
 
-const getChildrensOptions = ({ creator }: { creator: string }): JSX.Element[] => {
-  const { data } = trpc.getMembers.useQuery({ creator })
+const getChildrensOptions = ({ treeId }: { treeId: string }): JSX.Element[] => {
+  const { data } = trpc.getMembers.useQuery({ treeId })
   if (!data || data.members.length === 0) {
     return [<option key="empty">Empty</option>]
   }
@@ -70,21 +70,21 @@ export const EditMemberPage = withPageWrapper({
           <Input name="lastName" label="Last Name" formik={formik} />
           <Input name="firstName" label="First Name" formik={formik} />
           <Input name="middleName" label="Middle Name" formik={formik} />
-          <Select
+          <Select // TODO: fix empty select when first time edit member
             name="mother"
             label="Mother"
             disabled={formik.isSubmitting}
-            options={getChildrensOptions({ creator: member.creator.id })} // TODO: is it correct to use member.creator, instead of me.id?
+            options={getChildrensOptions({ treeId: member.treeId })}
             defaultValue={member.mother} // TODO: maybe it's possible to use formik
             onChange={(e) => {
               void formik.setFieldValue('mother', e.target.value) // TODO: use select 'name' parameter
             }}
           />
-          <Select
+          <Select // TODO: same as mother select
             name="father"
             label="Father"
             disabled={formik.isSubmitting}
-            options={getChildrensOptions({ creator: member.creator.id })} // TODO: same as mother select
+            options={getChildrensOptions({ treeId: member.treeId })}
             defaultValue={member.father} // TODO: same as mother select
             onChange={(e) => {
               void formik.setFieldValue('father', e.target.value) // TODO: same as mother select

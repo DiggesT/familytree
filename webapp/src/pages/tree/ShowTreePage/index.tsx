@@ -10,8 +10,8 @@ export const ShowTreePage = withPageWrapper({
     me: getAuthorizedMe(),
   }),
 })(({ me }) => {
-  const { data: memberData } = trpc.getMembers.useQuery({ creator: me.id, limit: 100 }) // TODO: unlimited
   const { data: treeData } = trpc.getTree.useQuery({ creator: me.id })
+  const { data: memberData } = trpc.getMembers.useQuery({ treeId: treeData?.tree ? treeData.tree.id : '', limit: 100 }) // TODO: unlimited
 
   return (
     // TODO: Should I do something with title treeData possibly undefined?

@@ -17,9 +17,9 @@ export const getMembersTrpcRoute = trpcLoggedProcedure
         serialNumber: true,
       },
       where: !input.search
-        ? { createdBy: input.creator } // TODO: recurring condition
+        ? { treeId: input.treeId } // TODO: recurring condition
         : {
-            createdBy: input.creator, // TODO: recurring condition
+            treeId: input.treeId, // TODO: recurring condition
             OR: [
               {
                 firstName: {

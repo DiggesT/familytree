@@ -22,10 +22,11 @@ export const AllMembersPage = withPageWrapper({
     validationSchema: zGetMembersTrpcInput.pick({ search: true }),
   })
   const [search] = useDebounceValue(formik.values.search, 500)
+  const { data: treeData } = trpc.getTree.useQuery({ creator: me.id })
   const { data, error, isLoading, isError, hasNextPage, fetchNextPage, isFetchingNextPage, isRefetching } =
     trpc.getMembers.useInfiniteQuery(
       {
-        creator: me.id,
+        treeId: treeData?.tree ? treeData.tree.id : '', // TODO: resolve undefind treeData?.tree
         search,
       },
       {
