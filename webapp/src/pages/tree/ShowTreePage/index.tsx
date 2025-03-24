@@ -18,11 +18,13 @@ export const ShowTreePage = withPageWrapper({
     permissions: ['OWNER', 'VIEWER'],
   })
 
-  const [treeSelected, setTreeSelected] = useState<string>(userTreePermissions ? userTreePermissions[0].treeId : '')
+  const [treeSelected, setTreeSelected] = useState<string>('')
   useEffect(() => {
     // TODO: I think this should work without useEffect
-    userTreePermissions ? setTreeSelected(userTreePermissions[0].treeId) : setTreeSelected('')
-  }, [userTreePermissions])
+    if (treeSelected === '') {
+      userTreePermissions ? setTreeSelected(userTreePermissions[0].treeId) : setTreeSelected('')
+    }
+  }, [userTreePermissions, treeSelected])
 
   const { data: memberData } = trpc.getMembers.useQuery({ treeId: treeSelected, limit: 100 }) // TODO: unlimited
 

@@ -1,12 +1,12 @@
 import { type TrpcRouterOutput } from '@familytree/backend/src/router'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Select } from '../../../components/Select'
 import { TreeMemberIcon } from '../SVG/TreeMemberIcon'
 import { groupMembersByLevel, setMemberLevel } from '../setMemberLevel/setMemberLevel'
 import css from './index.module.scss'
 
 export const BinaryTree = ({ dataMembers }: { dataMembers: TrpcRouterOutput['getMembers']['members'] }) => {
-  const [currentMember, setCurrenMember] = useState<{ id: string; mother: string; father: string; name: string }>({
+  const [currentMember, setCurrentMember] = useState<{ id: string; mother: string; father: string; name: string }>({
     id: '',
     mother: '',
     father: '',
@@ -22,9 +22,10 @@ export const BinaryTree = ({ dataMembers }: { dataMembers: TrpcRouterOutput['get
     }
   })
 
-  if (currentMember.id === '') {
-    setCurrenMember(members[0])
-  }
+  useEffect(() => {
+    setCurrentMember(members[0])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dataMembers])
 
   const memberOptions = dataMembers.map((member, index) => (
     <option key={index} value={member.id}>
@@ -32,7 +33,6 @@ export const BinaryTree = ({ dataMembers }: { dataMembers: TrpcRouterOutput['get
     </option>
   ))
 
-  // TODO: refresh membersWithLevel
   const membersWithLevel = groupMembersByLevel(setMemberLevel(currentMember, members, 0), 0)
 
   const maxLevel = membersWithLevel.length
@@ -83,11 +83,11 @@ export const BinaryTree = ({ dataMembers }: { dataMembers: TrpcRouterOutput['get
           label="Select member"
           disabled={false}
           options={memberOptions}
-          defaultValue={currentMember.id}
+          value={currentMember.id}
           onChange={(e) => {
             e.preventDefault()
             const selectedMember = members.find((member) => member.id === e.target.value)
-            selectedMember && setCurrenMember(selectedMember)
+            selectedMember && setCurrentMember(selectedMember)
           }}
         />
       </div>

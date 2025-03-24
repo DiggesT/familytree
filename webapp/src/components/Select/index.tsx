@@ -7,6 +7,7 @@ export const Select = ({
   disabled = false,
   options,
   defaultValue,
+  value,
   onChange,
 }: {
   name: string
@@ -14,6 +15,7 @@ export const Select = ({
   disabled: boolean
   options: JSX.Element[] | undefined
   defaultValue?: string
+  value?: string
   onChange?: (e: any) => void
 }): JSX.Element => {
   return (
@@ -21,7 +23,7 @@ export const Select = ({
       <label className={css.label} htmlFor={name}>
         {label}
       </label>
-      <select className={css.select} name={name} defaultValue={defaultValue} onChange={onChange}>
+      <select className={css.select} name={name} defaultValue={defaultValue} value={value} onChange={onChange}>
         {/* TODO: find better way to work with empty values */}
         {options !== undefined ? options : <option value="">Empty</option>}
       </select>
