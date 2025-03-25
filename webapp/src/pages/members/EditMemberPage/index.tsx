@@ -75,6 +75,7 @@ export const EditMemberPage = withPageWrapper({
             label="Mother"
             disabled={formik.isSubmitting}
             options={getChildrensOptions({ treeId: member.treeId })}
+            withEmpty={true}
             defaultValue={member.mother} // TODO: maybe it's possible to use formik
             onChange={(e) => {
               void formik.setFieldValue('mother', e.target.value) // TODO: use select 'name' parameter
@@ -85,6 +86,7 @@ export const EditMemberPage = withPageWrapper({
             label="Father"
             disabled={formik.isSubmitting}
             options={getChildrensOptions({ treeId: member.treeId })}
+            withEmpty={true}
             defaultValue={member.father} // TODO: same as mother select
             onChange={(e) => {
               void formik.setFieldValue('father', e.target.value) // TODO: same as mother select
