@@ -44,7 +44,7 @@ export const ShowTreePage = withPageWrapper({
             label="Choose Tree"
             disabled={false}
             options={userTreePermissionsOptions}
-            defaultValue={treeSelected}
+            value={treeSelected}
             onChange={(e) => {
               e.preventDefault()
               setTreeSelected(e.target.value)
