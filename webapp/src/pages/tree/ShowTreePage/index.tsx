@@ -22,7 +22,7 @@ export const ShowTreePage = withPageWrapper({
   useEffect(() => {
     // TODO: I think this should work without useEffect
     if (treeSelected === '') {
-      userTreePermissions ? setTreeSelected(userTreePermissions[0].treeId) : setTreeSelected('')
+      userTreePermissions?.length ? setTreeSelected(userTreePermissions[0].treeId) : setTreeSelected('')
     }
   }, [userTreePermissions, treeSelected])
 
