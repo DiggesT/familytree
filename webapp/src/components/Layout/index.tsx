@@ -13,7 +13,9 @@ export const Layout = () => {
   return (
     <div className={css.layout}>
       <div className={css.navigation}>
-        <Logo className={css.logo} />
+        <div className={css.logo}>
+          <Logo className={css.svg} />
+        </div>
         <ul className={css.menu}>
           {me ? (
             <>

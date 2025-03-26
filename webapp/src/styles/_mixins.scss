@@ -2,8 +2,7 @@
 @import './vars';
 @import '../../node_modules/include-media/dist/include-media';
 
-@mixin link($color: $blue, $hoverColor: $red) {
-  color: $color;
+@mixin link($hoverColor: $parchment) {
   transition: color 200ms ease;
 
   &:hover,

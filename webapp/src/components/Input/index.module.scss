@@ -27,12 +27,12 @@
     }
 
     &.invalid {
-      border-color: $red;
+      border-color: $bittersweetShimmer;
     }
   }
 
   .error {
     margin-top: 2px;
-    color: $red;
+    color: $bittersweetShimmer;
   }
 }

@@ -17,6 +17,11 @@
 
     .memberLink {
       @include link;
+      color: $blue;
+
+      &:hover {
+        color: $bittersweetShimmer;
+      }
     }
   }
 

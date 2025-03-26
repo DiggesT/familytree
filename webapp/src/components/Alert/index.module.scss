@@ -6,17 +6,17 @@
   border-radius: $borderRadiusSmall;
 
   &.red {
-    background-color: #ffd1d1;
-    color: #631717;
+    background-color: $bittersweetShimmer;
+    color: $white;
   }
 
   &.green {
-    background-color: #d7ffd7;
-    color: #2b6d2b;
+    background-color: $yellowGreen;
+    color: $white;
   }
 
   &.brown {
-    background-color: #e9d5bd;
-    color: #614f39;
+    background-color: $parchment;
+    color: $black;
   }
 }
