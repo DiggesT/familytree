@@ -64,6 +64,11 @@ export const Layout = () => {
               </li>
             </>
           )}
+          <li className={css.item}>
+            <Link className={css.link} to={routes.getAbout.definition}>
+              About
+            </Link>
+          </li>
         </ul>
       </div>
       <div className={css.content} ref={layoutContentElRef}>

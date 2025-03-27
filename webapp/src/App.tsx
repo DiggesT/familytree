@@ -15,6 +15,7 @@ import { AllMembersPage } from './pages/members/AllMembersPage'
 import { EditMemberPage } from './pages/members/EditMemberPage'
 import { NewMemberPage } from './pages/members/NewMemberPage/'
 import { ViewMemberPage } from './pages/members/ViewMemberPage'
+import { AboutPage } from './pages/other/AboutPage'
 import { NotFoundPage } from './pages/other/NotFoundPage'
 import { ShowTreePage } from './pages/tree/ShowTreePage'
 import { TreeManagerPage } from './pages/tree/TreeManagerPage'
@@ -34,6 +35,7 @@ export const App = () => {
               <Route element={<Layout />}>
                 <Route path={routes.getSignUpRoute.definition} element={<SignUpPage />} />
                 <Route path={routes.getSignInRoute.definition} element={<SignInPage />} />
+                <Route path={routes.getAbout.definition} element={<AboutPage />} />
                 <Route path={routes.getShowTreeRoute.definition} element={<ShowTreePage />} />
                 <Route path={routes.getTreeManagerRoute.definition} element={<TreeManagerPage />} />
                 <Route path={routes.getAllMembersRoute.definition} element={<AllMembersPage />} />

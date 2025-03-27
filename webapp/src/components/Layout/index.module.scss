@@ -35,8 +35,18 @@ $breakpoint: '<=900px';
     }
 
     .menu {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+
       .item {
-        margin: 0 12px 0 8px;
+        margin: 0 8px;
+
+        &:last-child {
+          position: sticky;
+          margin-top: auto;
+          bottom: 8px;
+        }
 
         .link {
           font-size: 18px;
