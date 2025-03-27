@@ -1,3 +1,4 @@
+import { sendInviteEmail } from '../../../lib/emails'
 import { ExpectedError } from '../../../lib/error'
 import { trpcLoggedProcedure } from '../../../lib/trpc'
 import { zSetTreePermissionTrpcInput } from './input'
@@ -41,6 +42,7 @@ export const setTreePermissionTrpcRoute = trpcLoggedProcedure
       if (invited !== null) {
         throw new ExpectedError(`User has already been invited.`)
       }
+      void sendInviteEmail({ user, nick: ctx.me.nick })
     }
 
     await ctx.prisma.userTreePermissions.upsert({

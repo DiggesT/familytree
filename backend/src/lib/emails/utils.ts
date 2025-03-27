@@ -22,6 +22,7 @@ const getHbrTemplates = _.memoize(async () => {
 const getEmailHtml = async (templateName: string, templateVariables: Record<string, string> = {}) => {
   const hbrTemplates = await getHbrTemplates()
   const hbrTemplate = hbrTemplates[templateName]
+  // TODO: TypeError: hbrTemplate is not a function
   const html = hbrTemplate(templateVariables)
   return html
 }
