@@ -10,14 +10,20 @@
     "types": "concurrently 'pnpm b types' 'pnpm w types'",
     "lint": "concurrently 'pnpm b lint' 'pnpm w lint'",
     "prettify": "pnpm -r --parallel prettify",
+    "dcc": "dotenv -e ./.env.docker -e ./backend/.env -e ./webapp/.env -- bash -c 'docker compose config'",
+    "dcb": "dotenv -e ./.env.docker -e ./backend/.env -e ./webapp/.env -- bash -c 'docker compose build --progress=plain'",
+    "dcu": "dotenv -e ./.env.docker -e ./backend/.env -e ./webapp/.env -- bash -c 'docker compose up'",
     "prepare": "husky"
+  },
+  "dependencies": {
+    "cross-env": "^7.0.3",
+    "dotenv-cli": "^8.0.0"
   },
   "devDependencies": {
     "@types/jest": "^29.5.14",
     "@types/node": "^22.13.4",
     "concurrently": "^9.1.2",
     "copyfiles": "^2.4.1",
-    "cross-env": "^7.0.3",
     "eslint": "8.x",
     "eslint-config-prettier": "^10.0.1",
     "eslint-config-react-app": "^7.0.1",

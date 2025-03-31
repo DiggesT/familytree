@@ -25,7 +25,6 @@
     "classnames": "^2.5.1",
     "date-fns": "^4.1.0",
     "dotenv": "^16.4.7",
-    "dotenv-cli": "^8.0.0",
     "formik": "^2.4.6",
     "formik-validator-zod": "^2.0.1",
     "include-media": "^2.0.0",
